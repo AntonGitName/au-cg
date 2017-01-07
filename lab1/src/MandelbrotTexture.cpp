@@ -2,17 +2,17 @@
 // Created by antonpp on 06.01.17.
 //
 
-#include "CustomTexture.h"
+#include "MandelbrotTexture.h"
 
-GLuint CustomTexture::get_texture_id() const {
+GLuint MandelbrotTexture::get_texture_id() const {
     return texture_id;
 }
 
-CustomTexture::~CustomTexture() {
+MandelbrotTexture::~MandelbrotTexture() {
     glDeleteTextures(1, &texture_id);
 }
 
-CustomTexture::CustomTexture(int fractal_iterations) : texture_id(0) {
+MandelbrotTexture::MandelbrotTexture(int fractal_iterations) : texture_id(0) {
     std::vector<GLfloat> colors;
     const GLfloat dc = 1.0f / (fractal_iterations + 1);
     for (int i = 0; i < fractal_iterations; i++) {

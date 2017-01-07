@@ -14,7 +14,7 @@ MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(4, 4)
 
     transform = glm::mat3(1.0f);
 
-    custom_texture = std::make_shared<CustomTexture>(fractal_iterations);
+    custom_texture = std::make_shared<MandelbrotTexture>(fractal_iterations);
     glUniform1i(glGetUniformLocation(program_id, "TEXTURE"), 0);
 
     glUseProgram(program_id);
@@ -44,10 +44,6 @@ void MandelbrotRenderer::render(GLFWwindow *window) {
     pane.draw();
 
     glfwSwapBuffers(window);
-}
-
-MandelbrotRenderer::~MandelbrotRenderer() {
-
 }
 
 void MandelbrotRenderer::onMouseWheel(double xoffset, double yoffset) {
@@ -100,7 +96,7 @@ void MandelbrotRenderer::onKeyEvent(int key, int scancode, int action, int mods)
     fractal_iterations = std::min(1000, fractal_iterations);
 
     if (prev_iter != fractal_iterations) {
-        custom_texture = std::make_shared<CustomTexture>(fractal_iterations);
+        custom_texture = std::make_shared<MandelbrotTexture>(fractal_iterations);
         glUniform1i(glGetUniformLocation(program_id, "TEXTURE"), 0);
     }
 }

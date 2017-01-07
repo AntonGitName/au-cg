@@ -12,10 +12,10 @@
 #include <cmath>
 #include <vector>
 
-class CustomTexture {
+class MandelbrotTexture {
 public:
-    CustomTexture(int fractal_iterations);
-    ~CustomTexture();
+    MandelbrotTexture(int fractal_iterations);
+    ~MandelbrotTexture();
     GLuint get_texture_id() const;
 private:
     GLuint texture_id;

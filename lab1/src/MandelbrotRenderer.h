@@ -18,7 +18,7 @@
 #include "AbstractRenderer.h"
 #include "ShaderWrapper.h"
 #include "Pane.h"
-#include "CustomTexture.h"
+#include "MandelbrotTexture.h"
 #include "AbstractWindowListener.h"
 
 
@@ -36,12 +36,10 @@ private:
     GLint transformID;
     GLint maxIterationsID;
     GLint imageSpaceWidthHeightID;
-    glm::vec3 camera_center = {0, 0, 5};
-    glm::vec3 camera_lookat = {0, 0, 0};
 
     Pane pane;
     int fractal_iterations = 10;
-    std::shared_ptr<CustomTexture> custom_texture;
+    std::shared_ptr<MandelbrotTexture> custom_texture;
 
     int width = 0;
     int height = 0;
@@ -51,8 +49,6 @@ private:
 
     glm::mat3 transform;
 public:
-    ~MandelbrotRenderer() override;
-
     void onMouseWheel(double xoffset, double yoffset) override;
 
     void onWindowSizeChanged(int width, int height) override;
