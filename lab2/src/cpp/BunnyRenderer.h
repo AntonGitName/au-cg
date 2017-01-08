@@ -30,14 +30,15 @@ public:
 
 private:
 
-    GLuint program_id;
+    ShaderWrapper bunny_shader;
+    ShaderWrapper cube_shader;
 
     int width = 0;
     int height = 0;
 
-    glm::mat3 transform;
-
     ObjectBuffersWrapper bunny;
+    ObjectBuffersWrapper cube;
+
 public:
     void onMouseWheel(double xoffset, double yoffset) override;
 
@@ -49,12 +50,15 @@ public:
 
     void onKeyEvent(int key, int scancode, int action, int mods) override;
 
-    GLint model_mat_id;
-    GLint projection_mat_id;
-    GLint view_mat_id;
-    glm::mat4 model;
+    GLint view_cube_id;
+    GLint model_cube_id;
+    glm::mat4 model_cube;
+
+    GLint view_bunny_id;
+    GLint model_bunny_id;
+    glm::mat4 model_bunny;
+
     glm::mat4 view;
-    glm::mat4 projection;
 };
 
 

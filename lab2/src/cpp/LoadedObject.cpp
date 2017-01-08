@@ -21,7 +21,7 @@ namespace {
 LoadedObject::LoadedObject(std::string fname) {
     std::ifstream in(fname);
     if (!in) {
-        throw std::runtime_error("Could not find obj file.");
+        throw std::runtime_error("Could not find obj file: " + fname);
     }
 
     std::string line;

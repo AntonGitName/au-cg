@@ -59,6 +59,7 @@ void WindowWrapper::loop() {
             renderer->render(window);
         }
 
+        glfwSwapBuffers(window);
         glfwPollEvents();
 
         show_fps();

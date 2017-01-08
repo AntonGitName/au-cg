@@ -12,6 +12,11 @@ ShaderWrapper::ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> p
         auto shader_id = glCreateShader(pathType.second);
 
         std::ifstream input(pathType.first);
+
+        if (!input) {
+            throw std::runtime_error("Could not find shader file: " + pathType.first);
+        }
+
         std::string shaderCode = std::string(std::istreambuf_iterator<char>(input),
                                std::istreambuf_iterator<char>());
 
