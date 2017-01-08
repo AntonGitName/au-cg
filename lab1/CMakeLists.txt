@@ -15,7 +15,7 @@ include_directories( ${OPENGL_INCLUDE_DIRS} ${GlmIncludeDir} ${GLFW_INCLUDE_DIRS
 add_definitions(-Wall -Wextra -pedantic -O3)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES src/main.cpp src/AbstractRenderer.h src/MandelbrotRenderer.cpp src/WindowWrapper.cpp src/ShaderWrapper.cpp src/ShaderWrapper.h src/Pane.cpp src/Pane.h src/MandelbrotTexture.cpp src/MandelbrotTexture.h src/AbstractWindowListener.h)
+set(SOURCE_FILES src/main.cpp src/AbstractRenderer.h src/MandelbrotRenderer.h src/MandelbrotRenderer.cpp src/WindowWrapper.cpp src/ShaderWrapper.cpp src/ShaderWrapper.h src/Pane.cpp src/Pane.h src/MandelbrotTexture.cpp src/MandelbrotTexture.h src/AbstractWindowListener.h)
 
 add_executable(fractal ${SOURCE_FILES})
 

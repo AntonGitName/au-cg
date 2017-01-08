@@ -49,8 +49,12 @@ public:
 
     void onKeyEvent(int key, int scancode, int action, int mods) override;
 
-    GLint model_M;
-    glm::mat4 model_mat;
+    GLint model_mat_id;
+    GLint projection_mat_id;
+    GLint view_mat_id;
+    glm::mat4 model;
+    glm::mat4 view;
+    glm::mat4 projection;
 };
 
 

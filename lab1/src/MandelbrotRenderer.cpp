@@ -2,7 +2,7 @@
 // Created by antonpp on 06.01.17.
 //
 
-#include "BunnyRenderer.h"
+#include "MandelbrotRenderer.h"
 
 MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(4, 4) {
     program_id = shaderWrapper.get_program();
