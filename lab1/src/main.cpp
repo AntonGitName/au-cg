@@ -3,7 +3,7 @@
 
 // local
 #include "WindowWrapper.h"
-#include "MandelbrotRenderer.h"
+#include "BunnyRenderer.h"
 
 int main() {
 
