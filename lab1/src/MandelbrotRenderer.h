@@ -32,10 +32,10 @@ private:
 
     GLuint program_id;
 
-    GLint locationMatrixID;
-    GLint transformID;
-    GLint maxIterationsID;
-    GLint imageSpaceWidthHeightID;
+    GLint mvp_id;
+    GLint transform_id;
+    GLint fractal_iterations_id;
+    GLint dimensions_id;
 
     Pane pane;
     int fractal_iterations = 10;

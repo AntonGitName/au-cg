@@ -7,10 +7,10 @@
 MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(4, 4) {
     program_id = shaderWrapper.get_program();
 
-    locationMatrixID = glGetUniformLocation(program_id, "MVP");
-    transformID = glGetUniformLocation(program_id, "TRANSFORM");
-    imageSpaceWidthHeightID = glGetUniformLocation(program_id, "DIMENSIONS");
-    maxIterationsID = glGetUniformLocation(program_id, "FACTORIAL_ITERATIONS");
+    mvp_id = glGetUniformLocation(program_id, "MVP");
+    transform_id = glGetUniformLocation(program_id, "TRANSFORM");
+    dimensions_id = glGetUniformLocation(program_id, "DIMENSIONS");
+    fractal_iterations_id = glGetUniformLocation(program_id, "FACTORIAL_ITERATIONS");
 
     transform = glm::mat3(1.0f);
 
@@ -35,11 +35,11 @@ void MandelbrotRenderer::render(GLFWwindow *window) {
 
     glm::mat4 MVPmatrix = projection * view;
 
-    glUniformMatrix4fv(locationMatrixID, 1, GL_FALSE, &MVPmatrix[0][0]);
-    glUniformMatrix3fv(transformID, 1, GL_FALSE, &transform[0][0]);
+    glUniformMatrix4fv(mvp_id, 1, GL_FALSE, &MVPmatrix[0][0]);
+    glUniformMatrix3fv(transform_id, 1, GL_FALSE, &transform[0][0]);
 
-    glUniform2f(imageSpaceWidthHeightID, pane.get_width(), pane.get_height());
-    glUniform1i(maxIterationsID, fractal_iterations);
+    glUniform2f(dimensions_id, pane.get_width(), pane.get_height());
+    glUniform1i(fractal_iterations_id, fractal_iterations);
 
     pane.draw();
 
