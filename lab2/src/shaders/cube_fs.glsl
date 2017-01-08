@@ -1,9 +1,10 @@
 #version 330 core
 
-uniform samplerCube texture;
+//uniform samplerCube texture;
 in vec3 uv;
-out vec4 frag_colour;
+out vec4 color;
 
 void main () {
-	frag_colour = texture (texture, uv);
+//	frag_colour = texture (texture, uv);
+    color = v4(1 , 0, 0, 1);
 }

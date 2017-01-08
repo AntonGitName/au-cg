@@ -50,12 +50,12 @@ LoadedObject::LoadedObject(std::string fname) {
         }
         if (line.substr(0, 2) == "f ") {
             std::istringstream s(line.substr(2));
-            std::string v1, v2, v3;
-            s >> v1 >> v2 >> v3;
+            std::string w[3];
+            s >> w[0] >> w[1] >> w[2];
             unsigned int v[3], uv[3], n[3];
 
             for (int i = 0; i < 3; ++i) {
-                parse_face_vertex(v1, v[i], uv[i], n[i]);
+                parse_face_vertex(w[i], v[i], uv[i], n[i]);
                 vertex_indices.push_back(v[i]);
                 uv_indices.push_back(uv[i]);
                 normal_indices.push_back(n[i]);

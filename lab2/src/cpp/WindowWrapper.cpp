@@ -2,6 +2,8 @@
 // Created by antonpp on 06.01.17.
 //
 
+#include <ostream>
+#include <iostream>
 #include "WindowWrapper.h"
 
 std::map<GLFWwindow *, std::vector<AbstractWindowListener*> > WindowWrapper::gListeners;
@@ -28,7 +30,6 @@ WindowWrapper::WindowWrapper(int w, int h, const char* title) : title(title) {
     if (glewInit() != GLEW_OK) {
         throw std::runtime_error("Could not init glew");
     }
-
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     // it is useful sometimes to find bugs with black objects

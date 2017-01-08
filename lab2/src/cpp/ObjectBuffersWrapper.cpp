@@ -7,10 +7,9 @@
 ObjectBuffersWrapper::ObjectBuffersWrapper(LoadedObject obj, bool has_normals, bool has_uvs)
         : has_normals(has_normals), has_uvs(has_uvs) {
 
-    length = 0;
+    length = obj.vertex_indices.size();
     for (auto i : obj.vertex_indices) {
         vertices.push_back(obj.vertices[i - 1]);
-        ++length;
     }
 
     if (has_normals) {
@@ -48,12 +47,16 @@ ObjectBuffersWrapper::ObjectBuffersWrapper(LoadedObject obj, bool has_normals, b
         glGenBuffers(1, &uv_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, uv_vbo);
         glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), uvs.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
         glEnableVertexAttribArray(2);
     }
 }
 
 ObjectBuffersWrapper::~ObjectBuffersWrapper() {
+    if (vao == INVALID_ID) {
+        return;
+    }
+
     if (has_normals) {
         glDeleteBuffers(1, &n_vbo);
     }
@@ -64,4 +67,19 @@ ObjectBuffersWrapper::~ObjectBuffersWrapper() {
 
     glDeleteBuffers(1, &v_vbo);
     glDeleteVertexArrays(1, &vao);
+}
+
+ObjectBuffersWrapper::ObjectBuffersWrapper(ObjectBuffersWrapper &&other)
+        : vertices(std::move(other.vertices))
+        , normals(std::move(other.normals))
+        , uvs(std::move(other.uvs)) {
+    v_vbo = other.v_vbo;
+    uv_vbo = other.uv_vbo;
+    n_vbo = other.n_vbo;
+    has_normals = other.has_normals;
+    has_uvs = other.has_uvs;
+    vao = other.vao;
+    length = other.length;
+    other.vao = INVALID_ID;
+
 }

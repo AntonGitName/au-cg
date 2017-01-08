@@ -6,16 +6,13 @@ uniform samplerBuffer TEXTURE;
 uniform mat3 TRANSFORM;
 uniform int FACTORIAL_ITERATIONS;
 uniform vec2 DIMENSIONS;
-out vec3 vColor;
+out vec3 color;
 
 
 void main() {
-    float w = DIMENSIONS.x;
-    float h = DIMENSIONS.y;
-    float R2 = w * w + h * h;
     gl_Position =  MVP * position_model;
 
-    vec3 pos = TRANSFORM * vec3(position_model) * vec3(DIMENSIONS, 1);
+    vec3 pos = TRANSFORM * vec3(position_model) * vec3(DIMENSIONS, 0);
     float zx = 0;
     float zy = 0;
     int iteration = 0;
@@ -25,10 +22,10 @@ void main() {
         zy = pos.y + 2 * zy * zx;
         zx = newzx;
 
-        if (zx * zx + zy * zy > R2) {
+        if (zx * zx + zy * zy > 4) {
             break;
         }
     }
 
-    vColor = texelFetch(TEXTURE, iteration).rgb;
+    color = texelFetch(TEXTURE, iteration).rgb;
 }

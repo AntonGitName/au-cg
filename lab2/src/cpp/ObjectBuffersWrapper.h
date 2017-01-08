@@ -19,11 +19,13 @@
 
 class ObjectBuffersWrapper {
 public:
+    ObjectBuffersWrapper(const ObjectBuffersWrapper&) = delete;
+    ObjectBuffersWrapper(ObjectBuffersWrapper&&);
     ObjectBuffersWrapper(LoadedObject obj, bool has_normals, bool has_uvs);
     ~ObjectBuffersWrapper();
 
     GLuint vao;
-    int length;
+    size_t length;
 
 private:
     std::vector<glm::vec3> vertices;
@@ -36,6 +38,8 @@ private:
 
     bool has_normals;
     bool has_uvs;
+
+    const GLuint INVALID_ID = (GLuint) -1;
 };
 
 

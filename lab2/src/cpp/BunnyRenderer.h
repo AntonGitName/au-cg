@@ -15,29 +15,16 @@
 #include <memory>
 
 // local
-#include "AbstractRenderer.h"
 #include "ShaderWrapper.h"
 #include "AbstractWindowListener.h"
 #include "LoadedObject.h"
 #include "ObjectBuffersWrapper.h"
+#include "ObjectRenderer.h"
 
 
-class BunnyRenderer : public AbstractRenderer, public AbstractWindowListener {
+class BunnyRenderer : public ObjectRenderer, public AbstractWindowListener {
 public:
     BunnyRenderer();
-
-    void render(GLFWwindow *window);
-
-private:
-
-    ShaderWrapper bunny_shader;
-    ShaderWrapper cube_shader;
-
-    int width = 0;
-    int height = 0;
-
-    ObjectBuffersWrapper bunny;
-    ObjectBuffersWrapper cube;
 
 public:
     void onMouseWheel(double xoffset, double yoffset) override;
@@ -49,16 +36,6 @@ public:
     void onMousePos(double x, double y) override;
 
     void onKeyEvent(int key, int scancode, int action, int mods) override;
-
-    GLint view_cube_id;
-    GLint model_cube_id;
-    glm::mat4 model_cube;
-
-    GLint view_bunny_id;
-    GLint model_bunny_id;
-    glm::mat4 model_bunny;
-
-    glm::mat4 view;
 };
 
 

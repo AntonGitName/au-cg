@@ -24,6 +24,17 @@ ShaderWrapper::ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> p
         glShaderSource(shader_id, 1, &c_str, NULL);
         glCompileShader(shader_id);
 
+        // check
+        GLint compilation_result = GL_FALSE;
+        GLint log_length;
+        glGetShaderiv(shader_id, GL_COMPILE_STATUS, &compilation_result);
+        glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &log_length);
+        if ( log_length > 0 ){
+            std::string shader_error_message((unsigned long) (log_length + 1), ' ');
+            glGetShaderInfoLog(shader_id, log_length, NULL, &shader_error_message[0]);
+            throw std::runtime_error("Could not compile shader: " + pathType.first + "\n" + shader_error_message);
+        }
+
         shader_ids.push_back(shader_id);
     }
 
@@ -46,5 +57,12 @@ GLuint ShaderWrapper::get_program() const {
 }
 
 ShaderWrapper::~ShaderWrapper() {
-    glDeleteProgram(program_id);
+    if (program_id != INVALID_ID) {
+        glDeleteProgram(program_id);
+    }
+}
+
+ShaderWrapper::ShaderWrapper(ShaderWrapper &&other) {
+    program_id = other.program_id;
+    other.program_id = INVALID_ID;
 }
