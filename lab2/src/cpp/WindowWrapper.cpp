@@ -55,6 +55,8 @@ GLFWwindow* WindowWrapper::get_window() const {
 void WindowWrapper::loop() {
     for (;;) {
 
+        glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         for (auto renderer: renderers) {
             renderer->render(window);
         }

@@ -34,8 +34,6 @@ BunnyRenderer::BunnyRenderer()
 void BunnyRenderer::render(GLFWwindow *window) {
     glfwGetFramebufferSize(window, &width, &height);
 
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     // cube
     glUseProgram(cube_shader.get_program());
     glUniformMatrix4fv (model_cube_id, 1, GL_FALSE, &model_cube[0][0]);
