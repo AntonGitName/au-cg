@@ -37,6 +37,7 @@ public:
 private:
     GLFWwindow *window;
     std::vector<AbstractRenderer *> renderers;
+    void show_fps();
     
     static std::map<GLFWwindow *, std::vector<AbstractWindowListener*> > gListeners;
 
@@ -45,6 +46,10 @@ private:
     static void onMouseButton(GLFWwindow *window, int button, int action, int mods);
     static void onMousePos(GLFWwindow *window, double x, double y);
     static void onKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+    double prev_time = 0;
+    int shown_frames = 0;
+    std::string title;
 };
 
 

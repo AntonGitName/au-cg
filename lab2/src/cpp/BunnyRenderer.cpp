@@ -4,39 +4,29 @@
 
 #include "BunnyRenderer.h"
 
-BunnyRenderer::BunnyRenderer(ShaderWrapper shaderWrapper) : pane(4, 4) {
+BunnyRenderer::BunnyRenderer() : bunny(LoadedObject("obj/bunny_with_normals.obj"), true, false) {
+    auto shaderWrapper = ShaderWrapper({{"shaders/bunny_vs.glsl", GL_VERTEX_SHADER}});
+
     program_id = shaderWrapper.get_program();
 
-    locationMatrixID = glGetUniformLocation(program_id, "MVP");
-    transformID = glGetUniformLocation(program_id, "TRANSFORM");
-    imageSpaceWidthHeightID = glGetUniformLocation(program_id, "DIMENSIONS");
-    maxIterationsID = glGetUniformLocation(program_id, "FACTORIAL_ITERATIONS");
-
-    transform = glm::mat3(1.0f);
-
-    custom_texture = std::make_shared<MandelbrotTexture>(fractal_iterations);
-    glUniform1i(glGetUniformLocation(program_id, "TEXTURE"), 0);
-
-    glUseProgram(program_id);
+    model_M = glGetUniformLocation(program_id, "M");
+    model_mat = glm::mat4(1);
 }
 
 void BunnyRenderer::render(GLFWwindow *window) {
     glfwGetFramebufferSize(window, &width, &height);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glm::mat4 view = glm::lookAt(
-            glm::vec3(0, 0, 3),
-            glm::vec3(0, 0, 0),
-            glm::vec3(0, 1, 0)
-    );
-
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float) (4.0 / 3.0), 0.1f, 100.0f);
-
-    glm::mat4 MVPmatrix = projection * view;
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+    glUseProgram (program_id);
+    glBindVertexArray (bunny.vao);
+    glUniformMatrix4fv (model_M, 1, GL_FALSE, &model_mat[0][0]);
+    glDrawArrays (GL_TRIANGLES, 0, bunny.length);
+
+    // Swap buffers
     glfwSwapBuffers(window);
+    glfwPollEvents();
 }
 
 void BunnyRenderer::onMouseWheel(double xoffset, double yoffset) {

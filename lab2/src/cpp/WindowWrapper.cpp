@@ -6,7 +6,7 @@
 
 std::map<GLFWwindow *, std::vector<AbstractWindowListener*> > WindowWrapper::gListeners;
 
-WindowWrapper::WindowWrapper(int w, int h, const char* title) {
+WindowWrapper::WindowWrapper(int w, int h, const char* title) : title(title) {
     if (!glfwInit()) {
         throw std::runtime_error("Could not init glfw");
     }
@@ -61,6 +61,8 @@ void WindowWrapper::loop() {
 
         glfwPollEvents();
 
+        show_fps();
+
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS || glfwWindowShouldClose(window)) {
             break;
         }
@@ -103,4 +105,19 @@ void WindowWrapper::onKeyEvent(GLFWwindow *window, int key, int scancode, int ac
     for (auto listener : gListeners[window]) {
         listener->onKeyEvent(key, scancode, action, mods);
     }
+}
+
+void WindowWrapper::show_fps() {
+    double current_time = glfwGetTime();
+    auto elapsed_time = current_time - prev_time;
+    if (elapsed_time > 1.0) {
+        prev_time = current_time;
+        double fps = (double) shown_frames / elapsed_time;
+        char tmp[256];
+        sprintf (tmp, "%s. FPS = %.2f", title.c_str(), fps);
+        glfwSetWindowTitle (window, tmp);
+        shown_frames = 0;
+    }
+    shown_frames++;
+
 }

@@ -17,14 +17,14 @@
 // local
 #include "AbstractRenderer.h"
 #include "ShaderWrapper.h"
-#include "Pane.h"
-#include "MandelbrotTexture.h"
 #include "AbstractWindowListener.h"
+#include "LoadedObject.h"
+#include "ObjectBuffersWrapper.h"
 
 
 class BunnyRenderer : public AbstractRenderer, public AbstractWindowListener {
 public:
-    BunnyRenderer(ShaderWrapper shaderWrapper);
+    BunnyRenderer();
 
     void render(GLFWwindow *window);
 
@@ -36,6 +36,8 @@ private:
     int height = 0;
 
     glm::mat3 transform;
+
+    ObjectBuffersWrapper bunny;
 public:
     void onMouseWheel(double xoffset, double yoffset) override;
 
@@ -46,6 +48,9 @@ public:
     void onMousePos(double x, double y) override;
 
     void onKeyEvent(int key, int scancode, int action, int mods) override;
+
+    GLint model_M;
+    glm::mat4 model_mat;
 };
 
 
