@@ -9,7 +9,6 @@ MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(1, 1)
 
     mvp_id = glGetUniformLocation(program_id, "MVP");
     transform_id = glGetUniformLocation(program_id, "TRANSFORM");
-    dimensions_id = glGetUniformLocation(program_id, "DIMENSIONS");
     fractal_iterations_id = glGetUniformLocation(program_id, "FACTORIAL_ITERATIONS");
 
     transform = glm::mat4(10.f);
@@ -28,24 +27,15 @@ MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(1, 1)
 void MandelbrotRenderer::render(GLFWwindow *window) {
     glfwGetFramebufferSize(window, &width, &height);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     auto model = glm::scale(glm::mat4(1), glm::vec3(23, 23, 23));
-
-
     auto projection = glm::perspective(glm::radians(45.0f), ((float) width / height), 0.01f, 1000.0f);
-
     auto MVPmatrix = projection * view * model;
 
     glUniformMatrix4fv(mvp_id, 1, GL_FALSE, &MVPmatrix[0][0]);
     glUniformMatrix4fv(transform_id, 1, GL_FALSE, &transform[0][0]);
-
-    glUniform2f(dimensions_id, pane.get_width(), pane.get_height());
     glUniform1i(fractal_iterations_id, fractal_iterations);
 
     pane.draw();
-
-    glfwSwapBuffers(window);
 }
 
 void MandelbrotRenderer::onMouseWheel(double xoffset, double yoffset) {

@@ -1,37 +1,50 @@
-# - Locate SOIL library
-# This module defines
-# SOIL_LIBRARY, the name of the library to link against
+#
+# Try to find SOIL library and include path.
+# Once done this will define
+#
 # SOIL_FOUND
-# SOIL_INCLUDE_DIR, where to find SOIL.h
-# To Adding search path, set SOIL_ROOT_DIR as follows
-# set(SOIL_ROOT_DIR "path/to/soil")
-# or launch cmake with -DSOIL_ROOT_DIR="/path/to/SOIL_ROOT_DIR".
+# SOIL_INCLUDE_PATH
+# SOIL_LIBRARY
 #
-# author: Kazunori Kimura
-# email : kazunori.abu@gmail.com
-#
-# revisions: github.com/zwookie
 
-FIND_PATH( SOIL_INCLUDE_DIRS SOIL/SOIL.h /usr/include /usr/local/include $ENV{INCLUDE} )
-FIND_LIBRARY( SOIL_LIBRARIES NAMES SOIL PATHS /usr/lib /usr/local/lib )
+IF(WIN32)
+    FIND_PATH( SOIL_INCLUDE_PATH SOIL/SOIL.h
+            $ENV{PROGRAMFILES}/SOIL/include
+            ${SOIL_ROOT_DIR}/include
+            DOC "The directory where SOIL/SOIL.h resides")
 
-IF(SOIL_INCLUDE_DIRS)
-    MESSAGE(STATUS "Found SOIL include dir: ${SOIL_INCLUDE_DIRS}")
-ELSE(SOIL_INCLUDE_DIRS)
-    MESSAGE(STATUS "Could NOT find SOIL headers.")
-ENDIF(SOIL_INCLUDE_DIRS)
+    FIND_LIBRARY( SOIL_LIBRARY
+            NAMES libSOIL.a SOIL
+            PATHS
+            $ENV{PROGRAMFILES}/SOIL/lib
+            ${SOIL_ROOT_DIR}/lib
+            DOC "The SOIL library")
+ELSE(WIN32)
+    FIND_PATH( SOIL_INCLUDE_PATH SOIL/SOIL.h
+            /usr/include
+            /usr/local/include
+            /sw/include
+            /opt/local/include
+            ${SOIL_ROOT_DIR}/include
+            DOC "The directory where SOIL/SOIL.h resides")
 
-IF(SOIL_LIBRARIES)
-    MESSAGE(STATUS "Found SOIL library: ${SOIL_LIBRARIES}")
-ELSE(SOIL_LIBRARIES)
-    MESSAGE(STATUS "Could NOT find SOIL library.")
-ENDIF(SOIL_LIBRARIES)
+    # Prefer the static library.
+    FIND_LIBRARY( SOIL_LIBRARY
+            NAMES libSOIL.a SOIL
+            PATHS
+            /usr/lib64
+            /usr/lib
+            /usr/local/lib64
+            /usr/local/lib
+            /sw/lib
+            /opt/local/lib
+            ${SOIL_ROOT_DIR}/lib
+            DOC "The SOIL library")
+ENDIF(WIN32)
 
-IF(SOIL_INCLUDE_DIRS AND SOIL_LIBRARIES)
+SET(SOIL_FOUND "NO")
+IF(SOIL_INCLUDE_PATH AND SOIL_LIBRARY)
+    SET(SOIL_LIBRARIES ${SOIL_LIBRARY})
     SET(SOIL_FOUND "YES")
-ELSE(SOIL_INCLUDE_DIRS AND SOIL_LIBRARIES)
-    SET(SOIL_FOUND "NO")
-    IF(SOIL_FIND_REQUIRED)
-        MESSAGE(FATAL_ERROR "Could not find SOIL. Please install SOIL")
-    ENDIF(SOIL_FIND_REQUIRED)
-ENDIF(SOIL_INCLUDE_DIRS AND SOIL_LIBRARIES)
+    message(STATUS "Found SOIL")
+ENDIF(SOIL_INCLUDE_PATH AND SOIL_LIBRARY)

@@ -35,7 +35,6 @@ private:
     GLint mvp_id;
     GLint transform_id;
     GLint fractal_iterations_id;
-    GLint dimensions_id;
 
     Pane pane;
     int fractal_iterations = 10;

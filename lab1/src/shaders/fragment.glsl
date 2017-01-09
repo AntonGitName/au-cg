@@ -1,7 +1,8 @@
 #version 330 core
 
-inout vec3 color;
+in vec3 color;
+out vec3 c;
 
-void main(){
-
+void main() {
+    c = color;
 }
