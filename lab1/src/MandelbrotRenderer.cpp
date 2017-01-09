@@ -4,7 +4,7 @@
 
 #include "MandelbrotRenderer.h"
 
-MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(4, 4) {
+MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(1, 1) {
     program_id = shaderWrapper.get_program();
 
     mvp_id = glGetUniformLocation(program_id, "MVP");
@@ -12,7 +12,12 @@ MandelbrotRenderer::MandelbrotRenderer(ShaderWrapper shaderWrapper) : pane(4, 4)
     dimensions_id = glGetUniformLocation(program_id, "DIMENSIONS");
     fractal_iterations_id = glGetUniformLocation(program_id, "FACTORIAL_ITERATIONS");
 
-    transform = glm::mat3(1.0f);
+    transform = glm::mat4(10.f);
+    view = glm::lookAt(
+            glm::vec3(0, 0, 5),
+            glm::vec3(0, 0, 0),
+            glm::vec3(0, 1, 0)
+    );
 
     custom_texture = std::make_shared<MandelbrotTexture>(fractal_iterations);
     glUniform1i(glGetUniformLocation(program_id, "TEXTURE"), 0);
@@ -25,18 +30,15 @@ void MandelbrotRenderer::render(GLFWwindow *window) {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glm::mat4 view = glm::lookAt(
-            glm::vec3(0, 0, 3),
-            glm::vec3(0, 0, 0),
-            glm::vec3(0, 1, 0)
-    );
+    auto model = glm::scale(glm::mat4(1), glm::vec3(23, 23, 23));
 
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float) (4.0 / 3.0), 0.1f, 100.0f);
 
-    glm::mat4 MVPmatrix = projection * view;
+    auto projection = glm::perspective(glm::radians(45.0f), ((float) width / height), 0.01f, 1000.0f);
+
+    auto MVPmatrix = projection * view * model;
 
     glUniformMatrix4fv(mvp_id, 1, GL_FALSE, &MVPmatrix[0][0]);
-    glUniformMatrix3fv(transform_id, 1, GL_FALSE, &transform[0][0]);
+    glUniformMatrix4fv(transform_id, 1, GL_FALSE, &transform[0][0]);
 
     glUniform2f(dimensions_id, pane.get_width(), pane.get_height());
     glUniform1i(fractal_iterations_id, fractal_iterations);
@@ -48,8 +50,14 @@ void MandelbrotRenderer::render(GLFWwindow *window) {
 
 void MandelbrotRenderer::onMouseWheel(double xoffset, double yoffset) {
     float zoom_factor = (float) pow(1.1, -yoffset);
-    transform[0][0] *= zoom_factor;
-    transform[1][1] *= zoom_factor;
+    float dx = (float) ((width / 2 - cursor_x) * 1.35 / width);
+    float dy = (float) ((height / 2 - cursor_y) * 1.00 / height);
+
+    transform = glm::translate(transform, glm::vec3(-dx, dy, 0));
+
+    transform = glm::scale(transform, glm::vec3(zoom_factor, zoom_factor, zoom_factor));
+
+    transform = glm::translate(transform, glm::vec3(dx, -dy, 0));
 }
 
 void MandelbrotRenderer::onWindowSizeChanged(int width, int height) {
@@ -66,11 +74,10 @@ void MandelbrotRenderer::onMouseButton(int button, int action, int mods) {
 
 void MandelbrotRenderer::onMousePos(double x, double y) {
     if (isMousePressed) {
-        float dx = pane.get_width() * (float) (x - cursor_x) / width;
-        float dy = pane.get_height() * (float) (y - cursor_y) / height;
+        float dx = (float) ((x - cursor_x) * 1.35 / width);
+        float dy = (float) ((y - cursor_y) * 1.00 / height);
 
-        transform[2][0] += dx * transform[0][0];
-        transform[2][1] -= dy * transform[0][0];
+        transform = glm::translate(transform, glm::vec3(-dx, dy, 0));
     }
     cursor_x = (float) x;
     cursor_y = (float) y;
@@ -83,10 +90,10 @@ void MandelbrotRenderer::onKeyEvent(int key, int scancode, int action, int mods)
     }
 
     switch (key) {
-        case GLFW_KEY_EQUAL:
+        case GLFW_KEY_UP:
             ++fractal_iterations;
             break;
-        case GLFW_KEY_MINUS:
+        case GLFW_KEY_DOWN:
             --fractal_iterations;
             break;
         default:

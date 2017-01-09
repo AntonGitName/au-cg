@@ -47,7 +47,8 @@ private:
     float cursor_y = 0;
     bool isMousePressed = false;
 
-    glm::mat3 transform;
+    glm::mat4 transform;
+    glm::mat4 view;
 public:
     void onMouseWheel(double xoffset, double yoffset) override;
 
@@ -58,6 +59,8 @@ public:
     void onMousePos(double x, double y) override;
 
     void onKeyEvent(int key, int scancode, int action, int mods) override;
+
+
 };
 
 
