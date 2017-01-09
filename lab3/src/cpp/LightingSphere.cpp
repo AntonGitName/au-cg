@@ -25,9 +25,9 @@ namespace {
 LightingSphere::LightingSphere(const std::shared_ptr<AbstractCamera> &camera_ptr)
         : ObjectRenderer(camera_ptr, get_g_shader(), get_g_sphere()) {
     v0 = get_random_vec3(-5, 5);
-    freq = get_random_vec3(0, 2);
-    scale = glm::scale(glm::mat4(1), glm::vec3(get_random(0, 1)));
-    amplitude = get_random_vec3(0, 4);
+    freq = get_random_vec3(1, 2);
+    scale = glm::scale(glm::mat4(1), glm::vec3(get_random(0.1, 1)));
+    amplitude = get_random_vec3(1, 4);
 
     color = {get_random(0, 1), get_random(0, 1), get_random(0, 1), 1};
 
