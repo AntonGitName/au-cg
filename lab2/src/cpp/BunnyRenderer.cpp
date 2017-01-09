@@ -4,7 +4,7 @@
 
 #include "BunnyRenderer.h"
 
-BunnyRenderer::BunnyRenderer(std::shared_ptr<Camera> camera_ptr)
+BunnyRenderer::BunnyRenderer(std::shared_ptr<AbstractCamera> camera_ptr)
         : ObjectRenderer(camera_ptr,
                          ObjectBuffersWrapper(LoadedObject("obj/bunny_with_normals.obj"), true, false),
                          ShaderWrapper({{"shaders/bunny_vs.glsl", GL_VERTEX_SHADER},

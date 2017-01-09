@@ -24,7 +24,7 @@
 
 class BunnyRenderer : public ObjectRenderer {
 public:
-    BunnyRenderer(std::shared_ptr<Camera> camera_ptr);
+    BunnyRenderer(std::shared_ptr<AbstractCamera> camera_ptr);
 };
 
 

@@ -2,7 +2,7 @@
 // Created by antonpp on 09.01.17.
 //
 
-#include "Camera.h"
+#include "CameraCentered.h"
 
 using namespace glm;
 
@@ -16,7 +16,7 @@ namespace {
     }
 }
 
-void Camera::onKeyEvent(int key, int scancode, int action, int mods) {
+void CameraCentered::onKeyEvent(int key, int scancode, int action, int mods) {
     if (action == GLFW_RELEASE) {
         return;
     }
@@ -45,35 +45,24 @@ void Camera::onKeyEvent(int key, int scancode, int action, int mods) {
     }
 }
 
-void Camera::onMousePos(double x, double y) {
+void CameraCentered::onMousePos(double x, double y) {
 
 }
 
-void Camera::onMouseButton(int button, int action, int mods) {
+void CameraCentered::onMouseButton(int button, int action, int mods) {
 
 }
 
-void Camera::onWindowSizeChanged(int width, int height) {
+void CameraCentered::onWindowSizeChanged(int width, int height) {
 
 }
 
-void Camera::onMouseWheel(double xoffset, double yoffset) {
-    float zoom_factor = (float) pow(1.1, std::abs(yoffset));
-    auto prev_r = r;
-    if (yoffset > 0) {
-        r /= zoom_factor;
-    } else {
-        r *= zoom_factor;
-    };
-    if (r < 1. || r > 35) {
-        r = prev_r;
-    }
+void CameraCentered::onMouseWheel(double xoffset, double yoffset) {
 }
 
-Camera::Camera() {}
 
-glm::mat4 Camera::get_view() const {
-    auto eye =  vec3(r * sin(theta) * cos(phi), r * cos(theta), r * sin(theta) * sin(phi));
+glm::mat4 CameraCentered::get_view() const {
+    auto eye = vec3(r * sin(theta) * cos(phi), r * cos(theta), r * sin(theta) * sin(phi));
     auto up = vec3(0, theta > 0 ? 1 : -1, 0);
     return glm::lookAt(
             eye,

@@ -20,7 +20,7 @@ include_directories( ${OPENGL_INCLUDE_DIRS} ${GlmIncludeDir} ${GLFW_INCLUDE_DIRS
 add_definitions(-Wall -Wextra -pedantic -g)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES src/cpp/main.cpp src/cpp/AbstractRenderer.h src/cpp/AbstractWindowListener.h src/cpp/WindowWrapper.cpp src/cpp/LoadedObject.cpp src/cpp/LoadedObject.h src/cpp/BunnyRenderer.cpp src/cpp/BunnyRenderer.h src/cpp/ShaderWrapper.cpp src/cpp/ShaderWrapper.h src/cpp/ObjectBuffersWrapper.cpp src/cpp/ObjectBuffersWrapper.h src/cpp/ObjectRenderer.cpp src/cpp/ObjectRenderer.h src/cpp/CubeRenderer.cpp src/cpp/CubeRenderer.h src/cpp/Camera.cpp src/cpp/Camera.h)
+set(SOURCE_FILES src/cpp/main.cpp src/cpp/AbstractRenderer.h src/cpp/AbstractWindowListener.h src/cpp/WindowWrapper.cpp src/cpp/LoadedObject.cpp src/cpp/LoadedObject.h src/cpp/BunnyRenderer.cpp src/cpp/BunnyRenderer.h src/cpp/ShaderWrapper.cpp src/cpp/ShaderWrapper.h src/cpp/ObjectBuffersWrapper.cpp src/cpp/ObjectBuffersWrapper.h src/cpp/ObjectRenderer.cpp src/cpp/ObjectRenderer.h src/cpp/CubeRenderer.cpp src/cpp/CubeRenderer.h src/cpp/CameraObject.cpp src/cpp/CameraObject.h src/cpp/CameraCentered.cpp src/cpp/CameraCentered.h src/cpp/AbstractCamera.cpp src/cpp/AbstractCamera.h)
 
 add_executable(reflection ${SOURCE_FILES})
 

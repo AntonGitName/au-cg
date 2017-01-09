@@ -10,10 +10,11 @@
 
 // local
 #include "ObjectRenderer.h"
+#include "CameraCentered.h"
 
 class CubeRenderer : public ObjectRenderer {
 public:
-    CubeRenderer(std::shared_ptr<Camera> camera_ptr);
+    CubeRenderer(std::shared_ptr<CameraCentered> camera_ptr);
     ~CubeRenderer();
 
     void render(GLFWwindow *window);

@@ -11,10 +11,11 @@
 
 // local
 #include "AbstractWindowListener.h"
+#include "AbstractCamera.h"
 
-class Camera : public AbstractWindowListener {
+class CameraObject : public AbstractCamera, public AbstractWindowListener {
 public:
-    Camera();
+    CameraObject();
 
     void onMouseWheel(double xoffset, double yoffset) override;
 

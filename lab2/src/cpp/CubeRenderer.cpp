@@ -6,7 +6,7 @@
 #include "CubeRenderer.h"
 
 
-CubeRenderer::CubeRenderer(std::shared_ptr<Camera> camera_ptr)
+CubeRenderer::CubeRenderer(std::shared_ptr<CameraCentered> camera_ptr)
         : ObjectRenderer(camera_ptr,
                          ObjectBuffersWrapper(LoadedObject("obj/cube.obj"), true, false),
                          ShaderWrapper({{"shaders/cube_vs.glsl", GL_VERTEX_SHADER},
@@ -40,6 +40,7 @@ void CubeRenderer::load_cubemap() {
 }
 
 void CubeRenderer::render(GLFWwindow *window) {
+
     glDepthMask(GL_FALSE);
     glDisable(GL_DEPTH_TEST);
     glActiveTexture(GL_TEXTURE0);

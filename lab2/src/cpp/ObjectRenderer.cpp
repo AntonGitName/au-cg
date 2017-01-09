@@ -4,7 +4,7 @@
 
 #include "ObjectRenderer.h"
 
-ObjectRenderer::ObjectRenderer(std::shared_ptr<Camera> camera_ptr, ObjectBuffersWrapper object, ShaderWrapper shader1)
+ObjectRenderer::ObjectRenderer(std::shared_ptr<AbstractCamera> camera_ptr, ObjectBuffersWrapper object, ShaderWrapper shader1)
     : camera_ptr(camera_ptr), object(std::move(object)), shader(std::move(shader1)) {
     model_id = glGetUniformLocation(shader.get_program(), "M");
     view_id = glGetUniformLocation(shader.get_program(), "V");
