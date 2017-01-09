@@ -18,7 +18,6 @@
 class ShaderWrapper {
 public:
     ShaderWrapper(const ShaderWrapper&) = delete;
-    ShaderWrapper(ShaderWrapper&&);
     ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> paths);
     ~ShaderWrapper();
 
@@ -26,8 +25,6 @@ public:
 
 private:
     GLuint program_id;
-
-    static const GLuint INVALID_ID = (GLuint) -1;
 };
 
 

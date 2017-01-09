@@ -14,13 +14,13 @@ ShaderWrapper::ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> p
         std::ifstream input(pathType.first);
 
         if (!input) {
-            throw std::runtime_error("Could not find shader file: " + pathType.first);
+            throw std::runtime_error("Could not find g_shader file: " + pathType.first);
         }
 
         std::string shaderCode = std::string(std::istreambuf_iterator<char>(input),
-                               std::istreambuf_iterator<char>());
+                                             std::istreambuf_iterator<char>());
 
-        const char* c_str = shaderCode.c_str();
+        const char *c_str = shaderCode.c_str();
         glShaderSource(shader_id, 1, &c_str, NULL);
         glCompileShader(shader_id);
 
@@ -29,10 +29,10 @@ ShaderWrapper::ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> p
         GLint log_length;
         glGetShaderiv(shader_id, GL_COMPILE_STATUS, &compilation_result);
         glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &log_length);
-        if ( log_length > 0 ){
+        if (log_length > 0) {
             std::string shader_error_message((unsigned long) (log_length + 1), ' ');
             glGetShaderInfoLog(shader_id, log_length, NULL, &shader_error_message[0]);
-            throw std::runtime_error("Could not compile shader: " + pathType.first + "\n" + shader_error_message);
+            throw std::runtime_error("Could not compile g_shader: " + pathType.first + "\n" + shader_error_message);
         }
 
         shader_ids.push_back(shader_id);
@@ -57,12 +57,5 @@ GLuint ShaderWrapper::get_program() const {
 }
 
 ShaderWrapper::~ShaderWrapper() {
-    if (program_id != INVALID_ID) {
-        glDeleteProgram(program_id);
-    }
-}
-
-ShaderWrapper::ShaderWrapper(ShaderWrapper &&other) {
-    program_id = other.program_id;
-    other.program_id = INVALID_ID;
+    glDeleteProgram(program_id);
 }

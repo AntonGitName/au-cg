@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <vector>
 #include <map>
+#include <memory>
 
 // local
 #include "AbstractRenderer.h"
@@ -31,15 +32,15 @@ public:
 
     void loop();
 
-    void add_renderer(AbstractRenderer* renderer);
-    static void add_listener(GLFWwindow *, AbstractWindowListener* listener);
+    void add_renderer(std::shared_ptr<AbstractRenderer> renderer);
+    static void add_listener(GLFWwindow *, std::shared_ptr<AbstractWindowListener> listener);
 
 private:
     GLFWwindow *window;
-    std::vector<AbstractRenderer *> renderers;
+    std::vector<std::shared_ptr<AbstractRenderer>> renderers;
     void show_fps();
     
-    static std::map<GLFWwindow *, std::vector<AbstractWindowListener*> > gListeners;
+    static std::map<GLFWwindow *, std::vector<std::shared_ptr<AbstractWindowListener> > > gListeners;
 
     static void onMouseWheel(GLFWwindow *window, double xoffset, double yoffset);
     static void onWindowSizeChanged(GLFWwindow* window, int width, int height);

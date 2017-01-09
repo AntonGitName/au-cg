@@ -81,3 +81,7 @@ glm::mat4 CameraObject::get_view() const {
             up
     );
 }
+
+glm::mat4 CameraObject::get_proj() const {
+    return projection;
+}

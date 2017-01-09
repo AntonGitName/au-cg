@@ -28,10 +28,13 @@ public:
     void onKeyEvent(int key, int scancode, int action, int mods) override;
 
     glm::mat4 get_view() const;
+    glm::mat4 get_proj() const;
 private:
     float theta = (float) M_PI_2;
     float phi = (float) M_PI_2;
     float r = 5;
+
+    glm::mat4 projection = glm::perspective(45.0f, 4.0f/3.0f, 0.01f, 2000.0f);
 };
 
 

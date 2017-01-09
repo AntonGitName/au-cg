@@ -13,6 +13,9 @@ public:
     virtual ~AbstractRenderer() {}
 
     virtual void render(GLFWwindow *window) = 0;
+protected:
+    int width = 0;
+    int height = 0;
 };
 
 

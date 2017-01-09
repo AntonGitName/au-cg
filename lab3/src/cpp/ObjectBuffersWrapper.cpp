@@ -53,10 +53,6 @@ ObjectBuffersWrapper::ObjectBuffersWrapper(LoadedObject obj, bool has_normals, b
 }
 
 ObjectBuffersWrapper::~ObjectBuffersWrapper() {
-    if (vao == INVALID_ID) {
-        return;
-    }
-
     if (has_normals) {
         glDeleteBuffers(1, &n_vbo);
     }
@@ -67,19 +63,4 @@ ObjectBuffersWrapper::~ObjectBuffersWrapper() {
 
     glDeleteBuffers(1, &v_vbo);
     glDeleteVertexArrays(1, &vao);
-}
-
-ObjectBuffersWrapper::ObjectBuffersWrapper(ObjectBuffersWrapper &&other)
-        : vertices(std::move(other.vertices))
-        , normals(std::move(other.normals))
-        , uvs(std::move(other.uvs)) {
-    v_vbo = other.v_vbo;
-    uv_vbo = other.uv_vbo;
-    n_vbo = other.n_vbo;
-    has_normals = other.has_normals;
-    has_uvs = other.has_uvs;
-    vao = other.vao;
-    length = other.length;
-    other.vao = INVALID_ID;
-
 }

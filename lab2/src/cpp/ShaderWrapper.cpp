@@ -14,7 +14,7 @@ ShaderWrapper::ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> p
         std::ifstream input(pathType.first);
 
         if (!input) {
-            throw std::runtime_error("Could not find shader file: " + pathType.first);
+            throw std::runtime_error("Could not find g_shader file: " + pathType.first);
         }
 
         std::string shaderCode = std::string(std::istreambuf_iterator<char>(input),
@@ -32,7 +32,7 @@ ShaderWrapper::ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> p
         if ( log_length > 0 ){
             std::string shader_error_message((unsigned long) (log_length + 1), ' ');
             glGetShaderInfoLog(shader_id, log_length, NULL, &shader_error_message[0]);
-            throw std::runtime_error("Could not compile shader: " + pathType.first + "\n" + shader_error_message);
+            throw std::runtime_error("Could not compile g_shader: " + pathType.first + "\n" + shader_error_message);
         }
 
         shader_ids.push_back(shader_id);

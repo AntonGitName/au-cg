@@ -12,6 +12,7 @@
 class AbstractCamera {
 public:
     virtual glm::mat4 get_view() const = 0;
+    virtual glm::mat4 get_proj() const = 0;
 };
 
 

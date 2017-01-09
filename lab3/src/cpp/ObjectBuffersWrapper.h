@@ -20,7 +20,6 @@
 class ObjectBuffersWrapper {
 public:
     ObjectBuffersWrapper(const ObjectBuffersWrapper&) = delete;
-    ObjectBuffersWrapper(ObjectBuffersWrapper&&);
     ObjectBuffersWrapper(LoadedObject obj, bool has_normals, bool has_uvs);
     ~ObjectBuffersWrapper();
 
@@ -38,8 +37,6 @@ private:
 
     bool has_normals;
     bool has_uvs;
-
-    const GLuint INVALID_ID = (GLuint) -1;
 };
 
 

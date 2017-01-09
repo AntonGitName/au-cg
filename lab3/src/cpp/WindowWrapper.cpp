@@ -6,7 +6,7 @@
 #include <iostream>
 #include "WindowWrapper.h"
 
-std::map<GLFWwindow *, std::vector<AbstractWindowListener *> > WindowWrapper::gListeners;
+std::map<GLFWwindow *, std::vector<std::shared_ptr<AbstractWindowListener> > > WindowWrapper::gListeners;
 
 WindowWrapper::WindowWrapper(int w, int h, const char *title) : title(title) {
     if (!glfwInit()) {
@@ -79,11 +79,11 @@ void WindowWrapper::loop() {
     }
 }
 
-void WindowWrapper::add_renderer(AbstractRenderer *renderer) {
+void WindowWrapper::add_renderer(std::shared_ptr<AbstractRenderer> renderer) {
     renderers.push_back(renderer);
 }
 
-void WindowWrapper::add_listener(GLFWwindow *window, AbstractWindowListener *listener) {
+void WindowWrapper::add_listener(GLFWwindow *window, std::shared_ptr<AbstractWindowListener> listener) {
     gListeners[window].push_back(listener);
 }
 
