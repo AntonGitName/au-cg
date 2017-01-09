@@ -27,9 +27,6 @@ protected:
     GLint modl_id;
     std::shared_ptr<AbstractCamera> camera_ptr;
     std::shared_ptr<ShaderWrapper> shader_ptr;
-
-// TODO
-public:
     glm::mat4 model;
 };
 

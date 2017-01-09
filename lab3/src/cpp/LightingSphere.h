@@ -12,27 +12,29 @@ class LightingSphere : public ObjectRenderer {
 public:
     LightingSphere(const std::shared_ptr<AbstractCamera> &camera_ptr);
 
-    void render(GLFWwindow *window);
-
-    GLuint get_vao() const;
+private:
+    void render_internal(GLFWwindow *window);
 
 public:
+    // movement
     glm::mat4 scale;
-    glm::vec3 color;
     glm::vec3 v0;
     glm::vec3 freq;
     glm::vec3 amplitude;
-    glm::vec3 diffuse;
-    glm::vec3 specular;
-    glm::vec3 position;
+    glm::vec4 position;
+
+    // light
+    glm::vec4 color;
+    glm::vec4 ka;
+    glm::vec4 kd;
+    glm::vec4 ks;
+    GLfloat ns;
 
     float t;
 
     void update_position();
 
     static constexpr float dt = 0.05f;
-
-    size_t get_length() const;
 
 private:
     static std::shared_ptr<ObjectBuffersWrapper> get_g_sphere();

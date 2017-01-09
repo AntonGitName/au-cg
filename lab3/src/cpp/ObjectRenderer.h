@@ -29,9 +29,12 @@ public:
                    std::shared_ptr<ShaderWrapper> shader_ptr,
                    std::shared_ptr<ObjectBuffersWrapper> object_ptr);
 
-    void render(GLFWwindow *window);
+    void render(GLFWwindow *window) final;
 
-public:
+protected:
+    virtual void render_internal(GLFWwindow *window);
+
+private:
     std::shared_ptr<ObjectBuffersWrapper> object_ptr;
 };
 

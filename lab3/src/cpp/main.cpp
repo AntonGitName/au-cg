@@ -16,12 +16,19 @@ std::vector<std::shared_ptr<LightingSphere>> create_spheres(size_t n, std::share
     return res;
 }
 
+template<class T>
+void f(T v) {
+    std::cout << v.x << " " << v.y << " " << v.z << std::endl;
+}
+
 int main(int argc, char **argv) {
+    srand(time(NULL));
+
     auto window_wrapper = WindowWrapper(1024, 768, "Phong shading");
 
     auto camera = std::make_shared<CameraObject>();
 
-    auto spheres = create_spheres(5, camera);
+    auto spheres = create_spheres(1, camera);
 
     auto qwe = std::make_shared<ShadingObjectRenderer>(camera);
 
@@ -30,7 +37,6 @@ int main(int argc, char **argv) {
         window_wrapper.add_renderer(renderer);
         qwe->add_light(renderer);
     }
-
 
 
     WindowWrapper::add_listener(window_wrapper.get_window(), camera);
