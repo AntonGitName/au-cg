@@ -41,7 +41,7 @@ void ShadingObjectRenderer::update_lights_position() {
         positions.push_back(light->position);
 
     }
-    glUniform4fv(glGetUniformLocation(shader_ptr->get_program(), "lightPosition"), (GLsizei) lights.size(),
+    glUniform4fv(glGetUniformLocation(shader_ptr->get_program(), "light_position"), (GLsizei) lights.size(),
                  (const GLfloat *) positions.data());
     f(lights[0]->position);
 }

@@ -66,7 +66,6 @@ std::shared_ptr<ShaderWrapper> LightingSphere::get_g_shader() {
 
 void LightingSphere::render_internal(GLFWwindow *window) {
     update_position();
-//    model = glm::translate(scale, position);
     glUniform3fv(glGetUniformLocation(g_shader->get_program(), "sphere_color"), 1, &color[0]);
 
     ObjectRenderer::render_internal(window);

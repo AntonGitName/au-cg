@@ -16,11 +16,6 @@ std::vector<std::shared_ptr<LightingSphere>> create_spheres(size_t n, std::share
     return res;
 }
 
-template<class T>
-void f(T v) {
-    std::cout << v.x << " " << v.y << " " << v.z << std::endl;
-}
-
 int main(int argc, char **argv) {
     srand(time(NULL));
 
@@ -28,7 +23,7 @@ int main(int argc, char **argv) {
 
     auto camera = std::make_shared<CameraObject>();
 
-    auto spheres = create_spheres(1, camera);
+    auto spheres = create_spheres(10, camera);
 
     auto qwe = std::make_shared<ShadingObjectRenderer>(camera);
 

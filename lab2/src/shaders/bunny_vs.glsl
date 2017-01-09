@@ -10,6 +10,6 @@ out vec3 normal;
 
 void main () {
 	eye = vec3 (V * M * vec4 (local_pos, 1.0));
-	normal = vec3 (V * M * vec4 (local_normal, 0.0));
+	normal = vec3 (V * M * vec4 (local_normal, 1.0));
 	gl_Position = P * V * M * vec4 (local_pos, 1.0);
 }
