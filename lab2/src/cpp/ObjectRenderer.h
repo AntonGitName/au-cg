@@ -20,26 +20,26 @@
 #include "AbstractWindowListener.h"
 #include "LoadedObject.h"
 #include "ObjectBuffersWrapper.h"
+#include "Camera.h"
 
 class ObjectRenderer : public AbstractRenderer {
 public:
-    ObjectRenderer(ObjectBuffersWrapper object, ShaderWrapper shader);
+    ObjectRenderer(std::shared_ptr<Camera> camera_ptr, ObjectBuffersWrapper object, ShaderWrapper shader);
 
     void render(GLFWwindow *window);
 
+private:
+    GLint view_id;
+    std::shared_ptr<Camera> camera_ptr;
 protected:
+    GLint model_id;
+    glm::mat4 model;
 
     int width = 0;
     int height = 0;
 
     ShaderWrapper shader;
     ObjectBuffersWrapper object;
-
-    GLint view_id;
-    GLint model_id;
-
-    glm::mat4 model;
-    glm::mat4 view;
 };
 
 

@@ -22,20 +22,9 @@
 #include "ObjectRenderer.h"
 
 
-class BunnyRenderer : public ObjectRenderer, public AbstractWindowListener {
+class BunnyRenderer : public ObjectRenderer {
 public:
-    BunnyRenderer();
-
-public:
-    void onMouseWheel(double xoffset, double yoffset) override;
-
-    void onWindowSizeChanged(int width, int height) override;
-
-    void onMouseButton(int button, int action, int mods) override;
-
-    void onMousePos(double x, double y) override;
-
-    void onKeyEvent(int key, int scancode, int action, int mods) override;
+    BunnyRenderer(std::shared_ptr<Camera> camera_ptr);
 };
 
 

@@ -13,7 +13,7 @@
 
 class CubeRenderer : public ObjectRenderer {
 public:
-    CubeRenderer();
+    CubeRenderer(std::shared_ptr<Camera> camera_ptr);
     ~CubeRenderer();
 
     void render(GLFWwindow *window);

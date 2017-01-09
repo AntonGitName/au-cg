@@ -1,9 +1,15 @@
 #version 330 core
 
-layout(location = 0) in vec3 vp; // positions from mesh
-layout(location = 1) in vec3 vn; // normals from mesh
-uniform mat4 P, V, M; // proj, view, model matrices
+uniform mat4 P, V, M;
+
+layout(location = 0) in vec3 local_pos;
+layout(location = 1) in vec3 local_normal;
+
+out vec3 eye;
+out vec3 normal;
 
 void main () {
-	gl_Position = P * V * M * vec4 (vp, 1.0);
+	eye = vec3 (V * M * vec4 (local_pos, 1.0));
+	normal = vec3 (V * M * vec4 (local_normal, 0.0));
+	gl_Position = P * V * M * vec4 (local_pos, 1.0);
 }

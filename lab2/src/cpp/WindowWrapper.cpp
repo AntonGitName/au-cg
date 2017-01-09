@@ -6,9 +6,9 @@
 #include <iostream>
 #include "WindowWrapper.h"
 
-std::map<GLFWwindow *, std::vector<AbstractWindowListener*> > WindowWrapper::gListeners;
+std::map<GLFWwindow *, std::vector<AbstractWindowListener *> > WindowWrapper::gListeners;
 
-WindowWrapper::WindowWrapper(int w, int h, const char* title) : title(title) {
+WindowWrapper::WindowWrapper(int w, int h, const char *title) : title(title) {
     if (!glfwInit()) {
         throw std::runtime_error("Could not init glfw");
     }
@@ -32,14 +32,20 @@ WindowWrapper::WindowWrapper(int w, int h, const char* title) : title(title) {
     }
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-    // it is useful sometimes to find bugs with black objects
-    glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
-
     glfwSetFramebufferSizeCallback(window, WindowWrapper::onWindowSizeChanged);
     glfwSetCursorPosCallback(window, WindowWrapper::onMousePos);
     glfwSetScrollCallback(window, WindowWrapper::onMouseWheel);
     glfwSetKeyCallback(window, WindowWrapper::onKeyEvent);
     glfwSetMouseButtonCallback(window, WindowWrapper::onMouseButton);
+
+
+    // it is useful sometimes to find bugs with black objects
+    glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+    glEnable(GL_DEPTH_TEST); // enable depth-testing
+    glDepthFunc(GL_LESS); // depth-testing interprets a smaller value as "closer"
+    glEnable(GL_CULL_FACE); // cull face
+    glCullFace(GL_BACK); // cull back face
+    glFrontFace(GL_CCW); // set counter-clock-wise vertex order to mean the front
 }
 
 WindowWrapper::~WindowWrapper() {
@@ -49,14 +55,14 @@ WindowWrapper::~WindowWrapper() {
     glfwTerminate();
 }
 
-GLFWwindow* WindowWrapper::get_window() const {
+GLFWwindow *WindowWrapper::get_window() const {
     return window;
 }
 
 void WindowWrapper::loop() {
     for (;;) {
 
-        glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (auto renderer: renderers) {
             renderer->render(window);
@@ -118,8 +124,8 @@ void WindowWrapper::show_fps() {
         prev_time = current_time;
         double fps = (double) shown_frames / elapsed_time;
         char tmp[256];
-        sprintf (tmp, "%s. FPS = %.2f", title.c_str(), fps);
-        glfwSetWindowTitle (window, tmp);
+        sprintf(tmp, "%s. FPS = %.2f", title.c_str(), fps);
+        glfwSetWindowTitle(window, tmp);
         shown_frames = 0;
     }
     shown_frames++;

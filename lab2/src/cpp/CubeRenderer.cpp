@@ -5,28 +5,18 @@
 #include <cstring>
 #include "CubeRenderer.h"
 
-CubeRenderer::CubeRenderer() : ObjectRenderer(ObjectBuffersWrapper(LoadedObject("obj/cube.obj"), true, false),
-                                              ShaderWrapper({{"shaders/cube_vs.glsl", GL_VERTEX_SHADER},
-                                                             {"shaders/cube_fs.glsl", GL_FRAGMENT_SHADER}})) {
+
+CubeRenderer::CubeRenderer(std::shared_ptr<Camera> camera_ptr)
+        : ObjectRenderer(camera_ptr,
+                         ObjectBuffersWrapper(LoadedObject("obj/cube.obj"), true, false),
+                         ShaderWrapper({{"shaders/cube_vs.glsl", GL_VERTEX_SHADER},
+                                        {"shaders/cube_fs.glsl", GL_FRAGMENT_SHADER}})) {
     load_cubemap();
 }
 
 void CubeRenderer::load_cubemap() {
     static const char *faces[] = {"obj/cubemap/posx.jpg", "obj/cubemap/negx.jpg", "obj/cubemap/posy.jpg",
                                   "obj/cubemap/negy.jpg", "obj/cubemap/posz.jpg", "obj/cubemap/negz.jpg",};
-
-//        static const char *faces[] = {"obj/darkskies/darkskies_rt.tga", "obj/darkskies/darkskies_lf.tga", "obj/darkskies/darkskies_ft.tga",
-//                                  "obj/darkskies/darkskies_bk.tga", "obj/cubemap/darkskies_dn.tga", "obj/darkskies/darkskies_up.tga",};
-
-//    cubemap_id = SOIL_load_OGL_cubemap(faces[0], faces[1], faces[2], faces[3], faces[4], faces[5], SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-//
-//    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemap_id);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-//    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
     glGenTextures(1, &cubemap_id);
 
@@ -50,17 +40,14 @@ void CubeRenderer::load_cubemap() {
 }
 
 void CubeRenderer::render(GLFWwindow *window) {
-//    glUseProgram(shader.get_program());
-//    glUniformMatrix4fv(model_id, 1, GL_FALSE, &model[0][0]);
-//    glUniformMatrix4fv(view_id, 1, GL_FALSE, &view[0][0]);
+    glDepthMask(GL_FALSE);
+    glDisable(GL_DEPTH_TEST);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, cubemap_id);
-//    glBindVertexArray(object.vao);
-//    glDrawArrays(GL_TRIANGLES, 0, (GLsizei) object.length);
 
     ObjectRenderer::render(window);
-
-//    std::cout << glGetError() << std::endl;
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
 }
 
 CubeRenderer::~CubeRenderer() {
