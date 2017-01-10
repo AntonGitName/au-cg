@@ -4,6 +4,9 @@
 
 #include "ImageRenderer.h"
 
+std::shared_ptr<ObjectBuffersWrapper> ImageRenderer::g_pane = nullptr;
+std::shared_ptr<ShaderWrapper> ImageRenderer::g_shader = nullptr;
+
 ImageRenderer::ImageRenderer(const std::shared_ptr<AbstractCamera> &camera_ptr)
         : ObjectRenderer(camera_ptr, get_g_shader(), get_g_pane()) {
 // Load textures
@@ -23,12 +26,15 @@ ImageRenderer::ImageRenderer(const std::shared_ptr<AbstractCamera> &camera_ptr)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    model = glm::translate(model, glm::vec3(0, 0, -100));
+    model = glm::scale(model, glm::vec3(120, 90, 1));
 }
 
 void ImageRenderer::init() {
-    g_pane = std::make_shared<ObjectBuffersWrapper>(LoadedObject("obj/pane.obj"), true, false);
+    g_pane = std::make_shared<ObjectBuffersWrapper>(LoadedObject("obj/pane.obj"), true, true);
     g_shader = std::make_shared<ShaderWrapper>(std::vector<std::pair<std::string, GLenum> >(
-            {{"shaders/inage_vs.glsl", GL_VERTEX_SHADER},
+            {{"shaders/image_vs.glsl", GL_VERTEX_SHADER},
              {"shaders/image_fs.glsl", GL_FRAGMENT_SHADER}}));
 }
 
@@ -47,5 +53,8 @@ std::shared_ptr<ShaderWrapper> ImageRenderer::get_g_shader() {
 }
 
 void ImageRenderer::render_internal(GLFWwindow *window) {
+
+    model = glm::rotate(model, -0.01f, glm::vec3(0, 0, 1));
+
     ObjectRenderer::render_internal(window);
 }
