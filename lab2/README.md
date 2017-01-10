@@ -15,3 +15,7 @@ Shows basic usage of cubemaps and reflections in opengl.
 
  * arrow keys - rotate object
  * mouse wheel - zoom in/out
+ 
+#### Preview
+ 
+![alt tag](https://github.com/AntonGitName/au-cg/blob/master/lab2/lab2-screenshot.png?raw=true "Cubemap reflection")
