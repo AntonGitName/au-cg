@@ -20,6 +20,8 @@ void ShadingObjectRenderer::add_light(std::shared_ptr<LightingSphere> light) {
 }
 
 void ShadingObjectRenderer::render_internal(GLFWwindow *window) {
+    model = glm::rotate(model, 0.03f, glm::vec3(0, 0, 1));
+
     update_lights_position();
     auto model_view = camera_ptr->get_view() * model;
     glm::mat4 normal = glm::inverse(glm::transpose(model_view));
@@ -29,12 +31,6 @@ void ShadingObjectRenderer::render_internal(GLFWwindow *window) {
     ObjectRenderer::render_internal(window);
 }
 
-template<class T>
-void f(T v) {
-    std::cout << v.x << " " << v.y << " " << v.z << std::endl;
-}
-
-
 void ShadingObjectRenderer::update_lights_position() {
     std::vector<glm::vec4> positions;
     for (auto light : lights) {
@@ -43,7 +39,6 @@ void ShadingObjectRenderer::update_lights_position() {
     }
     glUniform4fv(glGetUniformLocation(shader_ptr->get_program(), "light_position"), (GLsizei) lights.size(),
                  (const GLfloat *) positions.data());
-    f(lights[0]->position);
 }
 
 void ShadingObjectRenderer::update_lights_info() {

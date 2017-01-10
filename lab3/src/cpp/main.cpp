@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
     auto camera = std::make_shared<CameraObject>();
 
-    auto spheres = create_spheres(10, camera);
+    auto spheres = create_spheres(16, camera);
 
     auto qwe = std::make_shared<ShadingObjectRenderer>(camera);
 

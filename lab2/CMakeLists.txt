@@ -25,9 +25,6 @@ set(SOURCE_FILES src/cpp/main.cpp src/cpp/AbstractRenderer.h src/cpp/AbstractWin
 
 add_executable(reflection ${SOURCE_FILES})
 
-message('OPENGL_LIBRARIES=' ${OPENGL_LIBRARIES})
-message('SOIL_LIBRARY=' ${SOIL_LIBRARY})
-
 target_link_libraries(reflection
         ${OPENGL_LIBRARIES}
         ${SOIL_LIBRARY}

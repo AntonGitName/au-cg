@@ -30,13 +30,13 @@ public:
     glm::vec4 ks;
     GLfloat ns;
 
-    float t;
-
     void update_position();
+
+private:
+    float t = 0;
 
     static constexpr float dt = 0.05f;
 
-private:
     static std::shared_ptr<ObjectBuffersWrapper> get_g_sphere();
     static std::shared_ptr<ShaderWrapper> get_g_shader();
 

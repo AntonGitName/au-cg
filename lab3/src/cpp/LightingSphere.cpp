@@ -22,6 +22,11 @@ namespace {
     }
 }
 
+template<class T>
+void f(T v) {
+    std::cout << v.x << " " << v.y << " " << v.z << std::endl;
+}
+
 LightingSphere::LightingSphere(const std::shared_ptr<AbstractCamera> &camera_ptr)
         : ObjectRenderer(camera_ptr, get_g_shader(), get_g_sphere()) {
     v0 = get_random_vec3(-5, 5);

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/lab2/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/lab3/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 project(lab3)
@@ -33,12 +33,10 @@ set(SOURCE_FILES src/cpp/main.cpp
         src/cpp/LightingSphere.cpp src/cpp/LightingSphere.h
         src/cpp/AbstractCamera.cpp src/cpp/AbstractCamera.h
         src/cpp/ShadingObjectRenderer.cpp src/cpp/ShadingObjectRenderer.h
-        src/cpp/AbstractShaderRenderer.cpp src/cpp/AbstractShaderRenderer.h)
+        src/cpp/AbstractShaderRenderer.cpp src/cpp/AbstractShaderRenderer.h
+        src/cpp/ImageRenderer.cpp src/cpp/ImageRenderer.h)
 
 add_executable(shading ${SOURCE_FILES})
-
-message('OPENGL_LIBRARIES=' ${OPENGL_LIBRARIES})
-message('SOIL_LIBRARY=' ${SOIL_LIBRARY})
 
 target_link_libraries(shading
         ${OPENGL_LIBRARIES}
