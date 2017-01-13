@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
     window_wrapper.add_renderer(cube_renderer.get());
     window_wrapper.add_renderer(bunny_renderer.get());
 
+    WindowWrapper::add_listener(window_wrapper.get_window(), bunny_renderer.get());
     WindowWrapper::add_listener(window_wrapper.get_window(), bunny_camera.get());
     WindowWrapper::add_listener(window_wrapper.get_window(), cube_camera.get());
 

@@ -25,6 +25,8 @@
 class BunnyRenderer : public ObjectRenderer, public AbstractWindowListener {
 public:
     BunnyRenderer(std::shared_ptr<AbstractCamera> camera_ptr);
+
+    virtual void onKeyEvent(int key, int scancode, int action, int mods);
 };
 
 

@@ -13,7 +13,8 @@ Shows basic usage of cubemaps and reflections in opengl.
 
 #### Controls
 
- * arrow keys - rotate object
+ * arrow keys - rotate camera
+ * WASD - rotate bunny
  * mouse wheel - zoom in/out
  
 #### Preview
