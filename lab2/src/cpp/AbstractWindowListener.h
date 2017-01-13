@@ -10,11 +10,11 @@
 
 struct AbstractWindowListener {
     virtual ~AbstractWindowListener() {}
-    virtual void onMouseWheel(double xoffset, double yoffset) = 0;
-    virtual void onWindowSizeChanged(int width, int height) = 0;
-    virtual void onMouseButton(int button, int action, int mods) = 0;
-    virtual void onMousePos(double x, double y) = 0;
-    virtual void onKeyEvent(int key, int scancode, int action, int mods) = 0;
+    virtual void onMouseWheel(double xoffset, double yoffset) {}
+    virtual void onWindowSizeChanged(int width, int height) {}
+    virtual void onMouseButton(int button, int action, int mods) {}
+    virtual void onMousePos(double x, double y) {}
+    virtual void onKeyEvent(int key, int scancode, int action, int mods) {}
 };
 
 

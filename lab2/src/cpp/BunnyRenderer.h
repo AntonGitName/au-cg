@@ -22,7 +22,7 @@
 #include "ObjectRenderer.h"
 
 
-class BunnyRenderer : public ObjectRenderer {
+class BunnyRenderer : public ObjectRenderer, public AbstractWindowListener {
 public:
     BunnyRenderer(std::shared_ptr<AbstractCamera> camera_ptr);
 };

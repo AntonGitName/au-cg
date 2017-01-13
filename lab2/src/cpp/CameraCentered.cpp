@@ -54,7 +54,8 @@ void CameraCentered::onMouseButton(int button, int action, int mods) {
 }
 
 void CameraCentered::onWindowSizeChanged(int width, int height) {
-
+    glViewport(0, 0, width, height);
+    proj = glm::perspective(45.0f, (float) 4 / 3, 0.01f, 200.0f);
 }
 
 void CameraCentered::onMouseWheel(double xoffset, double yoffset) {

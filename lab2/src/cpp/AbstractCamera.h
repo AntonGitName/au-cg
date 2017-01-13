@@ -12,6 +12,10 @@
 class AbstractCamera {
 public:
     virtual glm::mat4 get_view() const = 0;
+    glm::mat4 get_proj() { return proj;}
+
+protected:
+    glm::mat4 proj = glm::perspective(45.0f, (float) 4 / 3, 0.01f, 200.0f);;
 };
 
 
