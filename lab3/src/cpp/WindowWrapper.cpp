@@ -87,6 +87,14 @@ void WindowWrapper::add_listener(GLFWwindow *window, std::shared_ptr<AbstractWin
     gListeners[window].push_back(listener);
 }
 
+void WindowWrapper::reset_renderers() {
+    renderers.clear();
+}
+
+void WindowWrapper::add_listener(std::shared_ptr<AbstractWindowListener> listener) {
+    add_listener(this->get_window(), listener);
+}
+
 void WindowWrapper::onMouseWheel(GLFWwindow *window, double xoffset, double yoffset) {
     for (auto listener : gListeners[window]) {
         listener->onMouseWheel(xoffset, yoffset);

@@ -12,29 +12,37 @@
 // local
 #include "AbstractWindowListener.h"
 #include "AbstractCamera.h"
+#include "LightingSphereRenderer.h"
 
 class CameraObject : public AbstractCamera, public AbstractWindowListener {
 public:
     CameraObject();
 
     void onMouseWheel(double xoffset, double yoffset) override;
-
     void onWindowSizeChanged(int width, int height) override;
-
-    void onMouseButton(int button, int action, int mods) override;
-
-    void onMousePos(double x, double y) override;
-
     void onKeyEvent(int key, int scancode, int action, int mods) override;
+    void onMousePos(double x, double y);
 
     glm::mat4 get_view() const;
     glm::mat4 get_proj() const;
 private:
-    float theta = (float) M_PI_2;
-    float phi = (float) M_PI_2;
-    float r = 5;
 
-    glm::mat4 projection = glm::perspective(45.0f, 4.0f/3.0f, 0.01f, 2000.0f);
+    glm::mat4 rotations = glm::mat4(1);
+
+    glm::vec3 cameraPos, cameraFront, cameraUp;
+
+    float yaw    = -90.0f;
+    float pitch  =  0.0f;
+    float fov =  34.0f;
+
+    bool firstMouse = true;
+
+    int width = 1024;
+    int height = 768;
+    glm::vec2 last_mouse_position = {width / 2, height / 2};
+
+    constexpr static float mouse_sensitivity = 0.20;
+    float camera_speed = 0.1f;
 };
 
 

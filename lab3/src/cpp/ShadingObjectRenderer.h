@@ -6,17 +6,21 @@
 #define AU_CG_SHADINGOBJECTRENDERER_H
 
 
+// std
+#include <set>
+
 // local
 #include "ObjectRenderer.h"
-#include "LightingSphere.h"
+#include "LightingSphereRenderer.h"
 
 class ShadingObjectRenderer : public ObjectRenderer {
 public:
     ShadingObjectRenderer(std::shared_ptr<AbstractCamera> camera_ptr);
 
-    void add_light(std::shared_ptr<LightingSphere>  light);
+    void add_light(std::shared_ptr<LightingSphereRenderer>  light);
+    void remove_light(std::shared_ptr<LightingSphereRenderer>  light);
 private:
-    std::vector<std::shared_ptr<LightingSphere> > lights;
+    std::set<std::shared_ptr<LightingSphereRenderer> > lights;
 
     glm::mat4 ModelView;
 

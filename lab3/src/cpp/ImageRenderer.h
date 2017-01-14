@@ -15,6 +15,7 @@ class ImageRenderer : public ObjectRenderer {
 
 public:
     ImageRenderer(const std::shared_ptr<AbstractCamera> &camera_ptr);
+    ~ImageRenderer();
 
     void render_internal(GLFWwindow *window);
 private:

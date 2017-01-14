@@ -7,13 +7,39 @@
 using namespace glm;
 
 namespace {
-    float dot(glm::vec3 v, glm::vec3 u) {
+    template<class T>
+    float dot(T v, T u) {
         return std::sqrt(v.x * u.x + v.y * u.y + v.z * u.z);
     }
 
-    float length(glm::vec3 v) {
+    template<class T>
+    float lengthV(T v) {
         return std::sqrt(dot(v, v));
     }
+}
+
+template<class T>
+void f(T v) {
+    std::cout << v.x << " " << v.y << " " << v.z << std::endl;
+}
+
+template<>
+void f(vec4 v) {
+    std::cout << v.x << " " << v.y << " " << v.z << " " << v.w << std::endl;
+}
+
+template<>
+void f(mat4 v) {
+    f(v[0]);
+    f(v[1]);
+    f(v[2]);
+    f(v[3]);
+}
+
+void CameraObject::onWindowSizeChanged(int width, int height) {
+    this->width = width;
+    this->height = height;
+    glViewport(0, 0, width, height);
 }
 
 void CameraObject::onKeyEvent(int key, int scancode, int action, int mods) {
@@ -22,66 +48,91 @@ void CameraObject::onKeyEvent(int key, int scancode, int action, int mods) {
     }
 
     switch (key) {
-        case GLFW_KEY_RIGHT:
-            phi -= 0.05;
+        case GLFW_KEY_W:
+            cameraPos += camera_speed * cameraFront;
             break;
+        case GLFW_KEY_S:
+            cameraPos -= camera_speed * cameraFront;
+            break;
+        case GLFW_KEY_A:
+            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * camera_speed;
+            break;
+        case GLFW_KEY_D:
+            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * camera_speed;
+            break;
+
         case GLFW_KEY_LEFT:
-            phi += 0.05;
+            rotations = rotate(rotations, +camera_speed, vec3{0, 1, 0});
+            break;
+        case GLFW_KEY_RIGHT:
+            rotations = rotate(rotations, -camera_speed, vec3{0, 1, 0});
             break;
         case GLFW_KEY_UP:
-            theta -= 0.05;
+            rotations = rotate(rotations, +camera_speed, vec3{0, 0, 1});
             break;
         case GLFW_KEY_DOWN:
-            theta += 0.05;
+            rotations = rotate(rotations, -camera_speed, vec3{0, 0, 1});
             break;
         default:
             break;
     }
-    if (theta > M_PI) {
-        theta -= 2 * M_PI;
+
+}
+
+void CameraObject::onMousePos(double xpos, double ypos) {
+    vec2 current_mouse_position = {xpos, ypos};
+    if (firstMouse) {
+        last_mouse_position = current_mouse_position;
+        firstMouse = false;
     }
-    if (theta < - M_PI) {
-        theta += 2 * M_PI;
+
+    GLfloat xoffset = current_mouse_position.x - last_mouse_position.x;
+    GLfloat yoffset = last_mouse_position.y - current_mouse_position.y;
+    last_mouse_position = current_mouse_position;
+
+
+    xoffset *= mouse_sensitivity;
+    yoffset *= mouse_sensitivity;
+
+    yaw   += xoffset;
+    pitch += yoffset;
+
+    if (pitch > 89.0f) {
+        pitch = 89.0f;
     }
-}
+    if (pitch < -89.0f) {
+        pitch = -89.0f;
+    }
 
-void CameraObject::onMousePos(double x, double y) {
-
-}
-
-void CameraObject::onMouseButton(int button, int action, int mods) {
-
-}
-
-void CameraObject::onWindowSizeChanged(int width, int height) {
-
+    glm::vec3 front;
+    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front.y = sin(glm::radians(pitch));
+    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    cameraFront = glm::normalize(front);
 }
 
 void CameraObject::onMouseWheel(double xoffset, double yoffset) {
-    float zoom_factor = (float) pow(1.1, std::abs(yoffset));
-    auto prev_r = r;
-    if (yoffset > 0) {
-        r /= zoom_factor;
-    } else {
-        r *= zoom_factor;
-    };
-    if (r < 1. || r > 35) {
-        r = prev_r;
+    if (fov >= 1.0f && fov <= 45.0f) {
+        fov -= yoffset;
+    }
+    if (fov <= 1.0f) {
+        fov = 1.0f;
+    }
+    if (fov >= 45.0f) {
+        fov = 45.0f;
     }
 }
 
-CameraObject::CameraObject() {}
+CameraObject::CameraObject() {
+    cameraUp = vec3{-0.40824829046, 0.81649658092, -0.40824829046};
+    cameraPos = {0, 0, 10};
+    cameraFront = {0, 0, -1};
+}
 
 glm::mat4 CameraObject::get_view() const {
-    auto eye = vec3(r * sin(theta) * cos(phi), r * cos(theta), r * sin(theta) * sin(phi));
-    auto up = vec3(0, theta > 0 ? 1 : -1, 0);
-    return glm::lookAt(
-            eye,
-            glm::vec3(0, 0, 0),
-            up
-    );
+    return glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp) * rotations;
 }
 
 glm::mat4 CameraObject::get_proj() const {
-    return projection;
+    return glm::perspective(glm::radians(fov), (float) width / height, 0.01f, 2000.0f);
 }

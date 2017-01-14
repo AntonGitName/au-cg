@@ -33,7 +33,8 @@ public:
     void loop();
 
     void add_renderer(std::shared_ptr<AbstractRenderer> renderer);
-    static void add_listener(GLFWwindow *, std::shared_ptr<AbstractWindowListener> listener);
+    void reset_renderers();
+    void add_listener(std::shared_ptr<AbstractWindowListener> listener);
 
 private:
     GLFWwindow *window;
@@ -41,6 +42,8 @@ private:
     void show_fps();
     
     static std::map<GLFWwindow *, std::vector<std::shared_ptr<AbstractWindowListener> > > gListeners;
+
+    static void add_listener(GLFWwindow *, std::shared_ptr<AbstractWindowListener> listener);
 
     static void onMouseWheel(GLFWwindow *window, double xoffset, double yoffset);
     static void onWindowSizeChanged(GLFWwindow* window, int width, int height);

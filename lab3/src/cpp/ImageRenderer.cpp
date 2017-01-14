@@ -58,3 +58,7 @@ void ImageRenderer::render_internal(GLFWwindow *window) {
 
     ObjectRenderer::render_internal(window);
 }
+
+ImageRenderer::~ImageRenderer() {
+    glDeleteTextures(1, &texture_id);
+}

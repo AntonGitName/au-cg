@@ -30,11 +30,11 @@ set(SOURCE_FILES src/cpp/main.cpp
         src/cpp/ObjectBuffersWrapper.cpp src/cpp/ObjectBuffersWrapper.h
         src/cpp/ObjectRenderer.cpp src/cpp/ObjectRenderer.h
         src/cpp/CameraObject.cpp src/cpp/CameraObject.h
-        src/cpp/LightingSphere.cpp src/cpp/LightingSphere.h
+        src/cpp/LightingSphereRenderer.cpp src/cpp/LightingSphereRenderer.h
         src/cpp/AbstractCamera.cpp src/cpp/AbstractCamera.h
         src/cpp/ShadingObjectRenderer.cpp src/cpp/ShadingObjectRenderer.h
         src/cpp/AbstractShaderRenderer.cpp src/cpp/AbstractShaderRenderer.h
-        src/cpp/ImageRenderer.cpp src/cpp/ImageRenderer.h)
+        src/cpp/ImageRenderer.cpp src/cpp/ImageRenderer.h src/cpp/Scene.cpp src/cpp/Scene.h src/cpp/AxisRenderer.cpp src/cpp/AxisRenderer.h)
 
 add_executable(shading ${SOURCE_FILES})
 

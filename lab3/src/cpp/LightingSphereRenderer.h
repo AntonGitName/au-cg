@@ -8,9 +8,9 @@
 // local
 #include "ObjectRenderer.h"
 
-class LightingSphere : public ObjectRenderer {
+class LightingSphereRenderer : public ObjectRenderer {
 public:
-    LightingSphere(const std::shared_ptr<AbstractCamera> &camera_ptr);
+    LightingSphereRenderer(const std::shared_ptr<AbstractCamera> &camera_ptr);
 
 private:
     void render_internal(GLFWwindow *window);
@@ -31,11 +31,13 @@ public:
     GLfloat ns;
 
     void update_position();
+    static void update_speed(bool increase);
 
 private:
     float t = 0;
 
-    static constexpr float dt = 0.05f;
+    static float dt;
+    static constexpr float dt_scale = 0.9f;
 
     static std::shared_ptr<ObjectBuffersWrapper> get_g_sphere();
     static std::shared_ptr<ShaderWrapper> get_g_shader();
