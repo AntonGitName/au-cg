@@ -1,4 +1,4 @@
-### Opengl lab2
+### Opengl lab3
 
 Shows basic usage of lights and shading in opengl.
 
