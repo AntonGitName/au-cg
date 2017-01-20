@@ -32,7 +32,7 @@ ShaderWrapper::ShaderWrapper(const std::vector<std::pair<std::string, GLenum>> p
         if (!compilation_result && (log_length > 0)) {
             std::string shader_error_message((unsigned long) (log_length + 1), ' ');
             glGetShaderInfoLog(shader_id, log_length, NULL, &shader_error_message[0]);
-            throw std::runtime_error("Could not compile g_shader: " + pathType.first + "\n" + shader_error_message);
+            throw std::runtime_error("Could not compile shader: " + pathType.first + "\n" + shader_error_message);
         }
 
         shader_ids.push_back(shader_id);
@@ -58,4 +58,9 @@ GLuint ShaderWrapper::get_program() const {
 
 ShaderWrapper::~ShaderWrapper() {
     glDeleteProgram(program_id);
+}
+
+std::shared_ptr<ShaderWrapper> ShaderWrapper::create(std::string vs, std::string fs) {
+    std::vector<std::pair<std::string, GLenum> > info =  {{"shaders/" + vs, GL_VERTEX_SHADER}, {"shaders/" + fs, GL_FRAGMENT_SHADER}};
+    return std::make_shared<ShaderWrapper>(info);
 }

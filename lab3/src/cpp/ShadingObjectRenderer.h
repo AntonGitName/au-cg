@@ -12,22 +12,33 @@
 // local
 #include "ObjectRenderer.h"
 #include "LightingSphereRenderer.h"
+#include "GBufferWrapper.h"
 
-class ShadingObjectRenderer : public ObjectRenderer {
+class ShadingObjectRenderer : public ObjectRenderer, public AbstractWindowListener {
 public:
     ShadingObjectRenderer(std::shared_ptr<AbstractCamera> camera_ptr);
 
-    void add_light(std::shared_ptr<LightingSphereRenderer>  light);
-    void remove_light(std::shared_ptr<LightingSphereRenderer>  light);
-private:
-    std::set<std::shared_ptr<LightingSphereRenderer> > lights;
+    void add_light(std::shared_ptr<PointLightInfo>  light);
+    void remove_light(std::shared_ptr<PointLightInfo>  light);
+    void onWindowSizeChanged(int width, int height);
 
-    glm::mat4 ModelView;
+private:
+    std::set<std::shared_ptr<PointLightInfo> > lights;
 
     void render_internal(GLFWwindow *window);
 
     void update_lights_info();
     void update_lights_position();
+
+    std::shared_ptr<GBufferWrapper> buffer_ptr;
+
+    std::shared_ptr<ShaderWrapper> geometry_shader;
+    std::shared_ptr<ShaderWrapper> light_shader;
+    std::shared_ptr<ShaderWrapper> blend_framebuffers_shader;
+
+    ObjectBuffersWrapper screen_square;
+
+    void setShader(std::shared_ptr<ShaderWrapper> shader);
 };
 
 

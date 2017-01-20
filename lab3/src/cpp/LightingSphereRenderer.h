@@ -7,6 +7,7 @@
 
 // local
 #include "ObjectRenderer.h"
+#include "PointLightInfo.h"
 
 class LightingSphereRenderer : public ObjectRenderer {
 public:
@@ -24,11 +25,7 @@ public:
     glm::vec4 position;
 
     // light
-    glm::vec4 color;
-    glm::vec4 ka;
-    glm::vec4 kd;
-    glm::vec4 ks;
-    GLfloat ns;
+    std::shared_ptr<PointLightInfo> light_info_ptr;
 
     void update_position();
     static void update_speed(bool increase);

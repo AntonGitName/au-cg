@@ -64,3 +64,17 @@ ObjectBuffersWrapper::~ObjectBuffersWrapper() {
     glDeleteBuffers(1, &v_vbo);
     glDeleteVertexArrays(1, &vao);
 }
+
+ObjectBuffersWrapper::ObjectBuffersWrapper(std::vector<glm::vec3> vertices)
+        : vertices(vertices), has_uvs(false), has_normals(false) {
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &v_vbo);
+
+    glBindVertexArray(vao);
+
+    glGenBuffers(1, &v_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, v_vbo);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(0);
+}

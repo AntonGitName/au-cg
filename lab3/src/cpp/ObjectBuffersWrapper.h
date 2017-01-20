@@ -20,6 +20,7 @@
 class ObjectBuffersWrapper {
 public:
     ObjectBuffersWrapper(const ObjectBuffersWrapper&) = delete;
+    ObjectBuffersWrapper(std::vector<glm::vec3> vertices);
     ObjectBuffersWrapper(LoadedObject obj, bool has_normals, bool has_uvs);
     ~ObjectBuffersWrapper();
 

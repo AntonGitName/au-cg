@@ -1,6 +1,7 @@
 #version 330 core
 
 uniform sampler2D the_texture;
+uniform sampler2D bump_exture;
 
 in vec2 Texcoord;
 

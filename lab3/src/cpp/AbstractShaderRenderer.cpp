@@ -7,13 +7,21 @@
 AbstractShaderRenderer::AbstractShaderRenderer(std::shared_ptr<AbstractCamera> camera_ptr,
                                                std::shared_ptr<ShaderWrapper> shader_ptr)
     : camera_ptr(camera_ptr), shader_ptr(shader_ptr) {
-
-    modl_id = glGetUniformLocation(shader_ptr->get_program(), "M");
-    view_id = glGetUniformLocation(shader_ptr->get_program(), "V");
-    proj_id = glGetUniformLocation(shader_ptr->get_program(), "P");
-
     model = glm::mat4(1);
+}
 
+GLint AbstractShaderRenderer::get_uniform(const char *name) {
+    return glGetUniformLocation(shader_ptr->get_program(), name);
+}
+
+void AbstractShaderRenderer::render(GLFWwindow *window) {
+    glfwGetFramebufferSize(window, &width, &height);
     glUseProgram(shader_ptr->get_program());
-    glUniformMatrix4fv(proj_id, 1, GL_FALSE, &camera_ptr->get_proj()[0][0]);
+    glUniformMatrix4fv(get_uniform("M"), 1, GL_FALSE, &model[0][0]);
+    glUniformMatrix4fv(get_uniform("V"), 1, GL_FALSE, &camera_ptr->get_view()[0][0]);
+    glUniformMatrix4fv(get_uniform("P"), 1, GL_FALSE, &camera_ptr->get_proj()[0][0]);
+
+
+    render_internal(window);
+//    std::cout << "Render error: " << glGetError() << std::endl;
 }

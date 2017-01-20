@@ -22,7 +22,6 @@ class AxisRenderer : public AbstractShaderRenderer {
 public:
     AxisRenderer(std::shared_ptr<AbstractCamera> camera_ptr);
     ~AxisRenderer();
-    void render(GLFWwindow *window);
 
 private:
     GLuint vao;
@@ -31,6 +30,7 @@ private:
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> colors;
 
+    void render_internal(GLFWwindow *window);
 
     static std::shared_ptr<ShaderWrapper> g_shader;
     static std::shared_ptr<ShaderWrapper> get_g_shader();

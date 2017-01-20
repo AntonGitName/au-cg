@@ -36,12 +36,15 @@ LightingSphereRenderer::LightingSphereRenderer(const std::shared_ptr<AbstractCam
     scale = glm::scale(glm::mat4(1), glm::vec3(get_random(0.1, 1)));
     amplitude = get_random_vec3(1, 4);
 
-    color = {get_random(0, 1), get_random(0, 1), get_random(0, 1), 1};
+    PointLightInfo light_info;
+    auto color = get_random_vec3(0, 1);
+    light_info.diffuse_color = color;
+    light_info.specular_color = color;
+    light_info.diffuse_coef = glm::vec3(get_random());
+    light_info.specular_coef = glm::vec3(get_random());
+    light_info.specular_exponent = 200;
 
-    ka = {1.0f, 0.5f, 0.5f, 1.0f};
-    kd = {0.8f, 0.8f, 0.8f, 1.0f};
-    ks = {0.3f, 0.3f, 0.3f, 1.0f};
-    ns = get_random(100, 200);
+    light_info_ptr = std::make_shared<PointLightInfo>(light_info);
 
     update_position();
 }
@@ -50,6 +53,7 @@ void LightingSphereRenderer::update_position() {
     t += dt;
     model = glm::translate(scale, v0 + amplitude * glm::sin(freq * t));
     position = camera_ptr->get_view() * model * glm::vec4(0, 0 , 0, 1);
+    light_info_ptr->position = glm::vec3(position);
 }
 
 void LightingSphereRenderer::init() {
@@ -75,7 +79,7 @@ std::shared_ptr<ShaderWrapper> LightingSphereRenderer::get_g_shader() {
 
 void LightingSphereRenderer::render_internal(GLFWwindow *window) {
     update_position();
-    glUniform3fv(glGetUniformLocation(g_shader->get_program(), "sphere_color"), 1, &color[0]);
+    glUniform3fv(glGetUniformLocation(g_shader->get_program(), "sphere_color"), 1, &light_info_ptr->diffuse_color[0]);
 
     ObjectRenderer::render_internal(window);
 }

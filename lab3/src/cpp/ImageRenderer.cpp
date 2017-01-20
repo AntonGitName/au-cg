@@ -9,7 +9,6 @@ std::shared_ptr<ShaderWrapper> ImageRenderer::g_shader = nullptr;
 
 ImageRenderer::ImageRenderer(const std::shared_ptr<AbstractCamera> &camera_ptr)
         : ObjectRenderer(camera_ptr, get_g_shader(), get_g_pane()) {
-// Load textures
     glGenTextures(1, &texture_id);
 
     int width, height;
@@ -55,7 +54,8 @@ std::shared_ptr<ShaderWrapper> ImageRenderer::get_g_shader() {
 void ImageRenderer::render_internal(GLFWwindow *window) {
 
     model = glm::rotate(model, -0.01f, glm::vec3(0, 0, 1));
-
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture_id);
     ObjectRenderer::render_internal(window);
 }
 

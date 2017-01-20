@@ -34,7 +34,7 @@ void Scene::remove_light() {
     if (!lightsRenderers.empty()) {
         auto lr = lightsRenderers.back();
         lightsRenderers.pop_back();
-        objectRenderer->remove_light(lr);        
+        objectRenderer->remove_light(lr->light_info_ptr);
     }
     update_renderers();
 }
@@ -43,7 +43,7 @@ void Scene::add_light() {
     if (lightsRenderers.size() < MAX_LIGHTS) {
         auto lr = std::make_shared<LightingSphereRenderer>(camera_ptr);
         lightsRenderers.push_back(lr);
-        objectRenderer->add_light(lr);
+        objectRenderer->add_light(lr->light_info_ptr);
     }
     update_renderers();
 }
@@ -58,6 +58,7 @@ Scene::Scene(std::shared_ptr<WindowWrapper> window) : window(window) {
     }
     update_renderers();
     window->add_listener(camera_ptr);
+    window->add_listener(objectRenderer);
 }
 
 void Scene::update_renderers() const {

@@ -14,6 +14,7 @@
 #include <fstream>
 #include <iterator>
 #include <vector>
+#include <memory>
 
 class ShaderWrapper {
 public:
@@ -22,6 +23,8 @@ public:
     ~ShaderWrapper();
 
     GLuint get_program() const;
+
+    static std::shared_ptr<ShaderWrapper> create(std::string vs, std::string fs);
 
 private:
     GLuint program_id;

@@ -34,7 +34,11 @@ set(SOURCE_FILES src/cpp/main.cpp
         src/cpp/AbstractCamera.cpp src/cpp/AbstractCamera.h
         src/cpp/ShadingObjectRenderer.cpp src/cpp/ShadingObjectRenderer.h
         src/cpp/AbstractShaderRenderer.cpp src/cpp/AbstractShaderRenderer.h
-        src/cpp/ImageRenderer.cpp src/cpp/ImageRenderer.h src/cpp/Scene.cpp src/cpp/Scene.h src/cpp/AxisRenderer.cpp src/cpp/AxisRenderer.h)
+        src/cpp/ImageRenderer.cpp src/cpp/ImageRenderer.h
+        src/cpp/Scene.cpp src/cpp/Scene.h
+        src/cpp/AxisRenderer.cpp src/cpp/AxisRenderer.h
+        src/cpp/GBufferWrapper.cpp src/cpp/GBufferWrapper.h
+        src/cpp/PointLightInfo.h)
 
 add_executable(shading ${SOURCE_FILES})
 

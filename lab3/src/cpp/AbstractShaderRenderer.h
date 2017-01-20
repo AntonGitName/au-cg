@@ -21,13 +21,16 @@ class AbstractShaderRenderer : public AbstractRenderer {
 public:
     AbstractShaderRenderer(std::shared_ptr<AbstractCamera> camera_ptr, std::shared_ptr<ShaderWrapper> shader_ptr);
 
+    void render(GLFWwindow *window) final;
+
 protected:
-    GLint proj_id;
-    GLint view_id;
-    GLint modl_id;
+    virtual void render_internal(GLFWwindow *window) = 0;
+
     std::shared_ptr<AbstractCamera> camera_ptr;
     std::shared_ptr<ShaderWrapper> shader_ptr;
     glm::mat4 model;
+
+    GLint get_uniform(const char* name);
 };
 
 

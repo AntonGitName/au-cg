@@ -8,11 +8,7 @@ using namespace glm;
 
 std::shared_ptr<ShaderWrapper> AxisRenderer::g_shader = nullptr;
 
-void AxisRenderer::render(GLFWwindow *window) {
-    glUseProgram(shader_ptr->get_program());
-    glUniformMatrix4fv (modl_id, 1, GL_FALSE, &model[0][0]);
-    glUniformMatrix4fv (view_id, 1, GL_FALSE, &camera_ptr->get_view()[0][0]);
-    glUniformMatrix4fv (proj_id, 1, GL_FALSE, &camera_ptr->get_proj()[0][0]);
+void AxisRenderer::render_internal(GLFWwindow *window) {
     glBindVertexArray (vao);
     glDrawArrays (GL_LINES, 0, (GLsizei) vertices.size());
 }
