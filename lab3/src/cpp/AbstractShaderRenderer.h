@@ -24,7 +24,10 @@ public:
     void render(GLFWwindow *window) final;
 
 protected:
+    void use_program();
+
     virtual void render_internal(GLFWwindow *window) = 0;
+    virtual void setup_render(GLFWwindow *window);
 
     std::shared_ptr<AbstractCamera> camera_ptr;
     std::shared_ptr<ShaderWrapper> shader_ptr;

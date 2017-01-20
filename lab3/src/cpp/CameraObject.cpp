@@ -6,36 +6,6 @@
 
 using namespace glm;
 
-namespace {
-    template<class T>
-    float dot(T v, T u) {
-        return std::sqrt(v.x * u.x + v.y * u.y + v.z * u.z);
-    }
-
-    template<class T>
-    float lengthV(T v) {
-        return std::sqrt(dot(v, v));
-    }
-}
-
-template<class T>
-void f(T v) {
-    std::cout << v.x << " " << v.y << " " << v.z << std::endl;
-}
-
-template<>
-void f(vec4 v) {
-    std::cout << v.x << " " << v.y << " " << v.z << " " << v.w << std::endl;
-}
-
-template<>
-void f(mat4 v) {
-    f(v[0]);
-    f(v[1]);
-    f(v[2]);
-    f(v[3]);
-}
-
 void CameraObject::onWindowSizeChanged(int width, int height) {
     this->width = width;
     this->height = height;
@@ -61,16 +31,16 @@ void CameraObject::onKeyEvent(int key, int scancode, int action, int mods) {
             cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * camera_speed;
             break;
 
-        case GLFW_KEY_LEFT:
+        case GLFW_KEY_DOWN:
             rotations = rotate(rotations, +camera_speed, vec3{0, 1, 0});
             break;
-        case GLFW_KEY_RIGHT:
+        case GLFW_KEY_UP:
             rotations = rotate(rotations, -camera_speed, vec3{0, 1, 0});
             break;
-        case GLFW_KEY_UP:
+        case GLFW_KEY_RIGHT:
             rotations = rotate(rotations, +camera_speed, vec3{0, 0, 1});
             break;
-        case GLFW_KEY_DOWN:
+        case GLFW_KEY_LEFT:
             rotations = rotate(rotations, -camera_speed, vec3{0, 0, 1});
             break;
         default:

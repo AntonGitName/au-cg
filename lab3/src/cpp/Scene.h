@@ -9,11 +9,12 @@
 // local
 #include "AbstractWindowListener.h"
 #include "LightingSphereRenderer.h"
-#include "ShadingObjectRenderer.h"
+#include "PhongObjectRenderer.h"
 #include "CameraObject.h"
 #include "WindowWrapper.h"
 #include "AxisRenderer.h"
 #include "ImageRenderer.h"
+#include "PhongTextureRenderer.h"
 
 class Scene : public AbstractWindowListener {
 public:
@@ -26,8 +27,8 @@ private:
     std::shared_ptr<CameraObject> camera_ptr;
 
     std::shared_ptr<WindowWrapper> window;
-    std::shared_ptr<ShadingObjectRenderer> objectRenderer;
-    std::shared_ptr<ImageRenderer> imageRenderer;
+    std::shared_ptr<PhongObjectRenderer> objectRenderer;
+    std::shared_ptr<PhongTextureRenderer> imageRenderer;
     std::shared_ptr<AxisRenderer> axisRenderer;
     std::vector<std::shared_ptr<LightingSphereRenderer>> lightsRenderers;
 
@@ -36,7 +37,7 @@ private:
 
     void update_renderers() const;
 
-    static const int MAX_LIGHTS = 16;
+    static const int MAX_LIGHTS = 32;
 };
 
 

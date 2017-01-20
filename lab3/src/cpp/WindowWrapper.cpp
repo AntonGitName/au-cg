@@ -7,6 +7,7 @@
 #include "WindowWrapper.h"
 
 std::map<GLFWwindow *, std::vector<std::shared_ptr<AbstractWindowListener> > > WindowWrapper::gListeners;
+float WindowWrapper::dt = 0.05f;
 
 WindowWrapper::WindowWrapper(int w, int h, const char *title) : title(title) {
     if (!glfwInit()) {
@@ -94,6 +95,14 @@ void WindowWrapper::reset_renderers() {
 
 void WindowWrapper::add_listener(std::shared_ptr<AbstractWindowListener> listener) {
     add_listener(this->get_window(), listener);
+}
+
+void WindowWrapper::update_speed(bool increase) {
+    dt *= increase ? 1 / dt_scale : dt_scale;
+}
+
+float WindowWrapper::get_delta_time() {
+    return dt;
 }
 
 void WindowWrapper::onMouseWheel(GLFWwindow *window, double xoffset, double yoffset) {

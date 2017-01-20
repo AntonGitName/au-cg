@@ -8,33 +8,28 @@
 // local
 #include "ObjectRenderer.h"
 #include "PointLightInfo.h"
+#include "WindowWrapper.h"
 
 class LightingSphereRenderer : public ObjectRenderer {
 public:
     LightingSphereRenderer(const std::shared_ptr<AbstractCamera> &camera_ptr);
 
 private:
-    void render_internal(GLFWwindow *window);
+    void setup_render(GLFWwindow *window);
 
 public:
-    // movement
     glm::mat4 scale;
     glm::vec3 v0;
     glm::vec3 freq;
     glm::vec3 amplitude;
     glm::vec4 position;
 
-    // light
     std::shared_ptr<PointLightInfo> light_info_ptr;
 
     void update_position();
-    static void update_speed(bool increase);
 
 private:
     float t = 0;
-
-    static float dt;
-    static constexpr float dt_scale = 0.9f;
 
     static std::shared_ptr<ObjectBuffersWrapper> get_g_sphere();
     static std::shared_ptr<ShaderWrapper> get_g_shader();

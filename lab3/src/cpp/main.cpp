@@ -4,7 +4,7 @@
 // local
 #include "WindowWrapper.h"
 #include "CameraObject.h"
-#include "ShadingObjectRenderer.h"
+#include "PhongObjectRenderer.h"
 #include "Scene.h"
 
 int main(int argc, char **argv) {

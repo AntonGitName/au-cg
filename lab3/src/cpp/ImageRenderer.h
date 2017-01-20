@@ -17,14 +17,17 @@ public:
     ImageRenderer(const std::shared_ptr<AbstractCamera> &camera_ptr);
     ~ImageRenderer();
 
-    void render_internal(GLFWwindow *window);
+    static std::shared_ptr<ObjectBuffersWrapper> get_g_pane();
+    static std::shared_ptr<ShaderWrapper> get_g_shader();
+
+protected:
+    void setup_render(GLFWwindow *window);
+
 private:
 
     GLuint texture_id;
+    GLuint normalmap_id;
 
-
-    static std::shared_ptr<ObjectBuffersWrapper> get_g_pane();
-    static std::shared_ptr<ShaderWrapper> get_g_shader();
 
     static std::shared_ptr<ObjectBuffersWrapper> g_pane;
     static std::shared_ptr<ShaderWrapper> g_shader;

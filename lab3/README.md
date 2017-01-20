@@ -8,7 +8,7 @@ Shows basic usage of lights and shading in opengl.
  - `mkdir build && cd build`
  - `cmake .. && make`
  - `cp -r ../src/obj ../src/shaders .`
- - run `./reflection`
+ - run `./shading`
 
 
 #### Controls
@@ -16,8 +16,8 @@ Shows basic usage of lights and shading in opengl.
  * arrow keys - rotate object
  * mouse wheel - zoom in/out
  * <kbd>w</kbd>, <kbd>a</kbd>, <kbd>s</kbd>, <kbd>d</kbd> - camera move
- * <kbd>Page Up</kbd> / <kbd>Page Down</kbd> - control animation speed
- * <kbd>-</kbd> and <kbd>=</kbd> - control number of lights
+ * <kbd>Page Up</kbd>, <kbd>Page Down</kbd> - control animation speed
+ * <kbd>-</kbd>, <kbd>=</kbd> - control number of lights
  
  
 #### Preview

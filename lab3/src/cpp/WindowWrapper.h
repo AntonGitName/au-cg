@@ -36,6 +36,9 @@ public:
     void reset_renderers();
     void add_listener(std::shared_ptr<AbstractWindowListener> listener);
 
+    static void update_speed(bool increase);
+    static float get_delta_time();
+
 private:
     GLFWwindow *window;
     std::vector<std::shared_ptr<AbstractRenderer>> renderers;
@@ -54,6 +57,9 @@ private:
     double prev_time = 0;
     int shown_frames = 0;
     std::string title;
+
+    static float dt;
+    static constexpr float dt_scale = 0.9f;
 };
 
 

@@ -78,3 +78,7 @@ ObjectBuffersWrapper::ObjectBuffersWrapper(std::vector<glm::vec3> vertices)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(0);
 }
+
+std::shared_ptr<ObjectBuffersWrapper> ObjectBuffersWrapper::load(std::string name, bool norm, bool uv) {
+    return std::make_shared<ObjectBuffersWrapper>(LoadedObject("obj/" + name), norm, uv);
+}

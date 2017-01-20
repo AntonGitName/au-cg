@@ -23,7 +23,7 @@
 #include "AbstractCamera.h"
 #include "AbstractShaderRenderer.h"
 
-class ObjectRenderer : public AbstractShaderRenderer {
+class ObjectRenderer : public virtual AbstractShaderRenderer {
 public:
     ObjectRenderer(std::shared_ptr<AbstractCamera> camera_ptr,
                    std::shared_ptr<ShaderWrapper> shader_ptr,

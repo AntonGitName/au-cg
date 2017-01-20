@@ -13,6 +13,7 @@
 
 // std
 #include <vector>
+#include <memory>
 
 // local
 #include "LoadedObject.h"
@@ -26,6 +27,8 @@ public:
 
     GLuint vao;
     size_t length;
+
+    static std::shared_ptr<ObjectBuffersWrapper> load(std::string name, bool norm, bool uv);
 
 private:
     std::vector<glm::vec3> vertices;
