@@ -13,7 +13,7 @@ Shows basic usage of lights and shading in opengl.
 
 #### Controls
 
- * arrow keys - rotate object
+ * arrow keys - rotate scene
  * mouse wheel - zoom in/out
  * <kbd>w</kbd>, <kbd>a</kbd>, <kbd>s</kbd>, <kbd>d</kbd> - camera move
  * <kbd>Page Up</kbd>, <kbd>Page Down</kbd> - control animation speed
